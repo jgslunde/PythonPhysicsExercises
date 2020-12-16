@@ -1,0 +1,12 @@
+Object    Distance[km]    Mass[kg]    Radius[km]
+
+Sun       0               1.99e30     695700
+Mercury   5.79e7          3.30e23     2440
+Venus     1.08e8          4.87e24     6052
+Earth     1.50e8          5.97e24     6378
+Mars      2.28e8          6.42e23     3396
+Jupiter   7.79e8          1.90e27     71492
+Saturn    1.43e9          5.68e26     60268
+Uranus    2.87e9          8.68e25     25559
+Neptune   4.49e9          1.02e26     24764
+Pluto     5.90e9          1.46e22     1185
