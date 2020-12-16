@@ -1,0 +1,191 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+\begin{document}
+ 
+\section*{Oppgave 7.1 - Planet-klasse}
+\addcontentsline{toc}{section}{Oppgave 7.1 - Planet-klasse - \texttt{Planet.py}}
+\subsection*{a)}
+Du skal skrive en klasse \texttt{Planet}, som tar inn informasjon om en planets \textit {navn}, \textit{radius} og \textit{masse}, og lagrer verdiene. Inkluder en metode \texttt{density}, som returnerer massetettheten til planeten, i $\mathrm{kg/m^3}$, og en metode \texttt{print\_info}, som printer all kjent informasjon om planeten, inkludert massetettheten. (Du kan kalle \texttt{density} metoden fra \texttt{print\_info}).
+ 
+ 
+\subsection*{b)}
+Lag en instans av klassen kalt \texttt{planet1}, som representerer Jorden (sett gjerne navnet til "Earth"). Legg til en ny "attribute" til instansen, kalt \texttt{population}, med en verdi \texttt{7497486172}.
+ 
+Legg ved følgende linje til slutten av programmet ditt. Hvis du har implementert alt korrekt, skal du få printen vist under:
+ 
+\texttt{print planet1.name, "has a population of ", planet1.population}
+ 
+\begin{verbatim}
+>>> Earth has a population of 7497486172
+\end{verbatim}
+ 
+ Filnavn: \texttt{Planet.py}
+ 
+\section*{Oppgave 7.2 - Coulombs lov}
+\addcontentsline{toc}{section}{Oppgave 7.2 - Coulombs lov - \texttt{Particle\_Coulomb.py}}
+Coulombs lov forteller oss om hvilken kraft som virker mellom to ladede punktlegemer
+\footnote{Et punktlegeme er et legeme uten utstrekning. En kan tenke på punktlegeme som noe som finnes, men er såpass liten at det tar ingen plass. Små legemer, som f.eks elementærpartikler pleier vi vanligvis å kalle for punktlegemer. 
+	For legemer som har utstrekning og er kuleformede kan vi også anvende denne loven.}. \\
+ 
+Vi skal nå se på hvordan vi kan lage en enkel modell til å finne kraften som virker mellom to ladede partikler. 
+ 
+Coulombs lov er definert på følgende måte:
+\[
+F = k_e\frac{q_1q_2}{r^2}
+\]
+der $k_e = \SI{8.988e9}{\newton\square\meter.\per\square\coulomb}$, $q_1$ er ladningen til et punktlegeme, $q_2$ er ladningen til det andre punktlegemet og $r$ er avstanden mellom partiklene.
+ 
+\subsection*{a)}
+Definér en klasse som tar inn partikkelens posisjon (som en array bestående av punktlegemets x- og y-koordinat) og ladning $q$ i konstruktøren. 
+ 
+Klassen skal også inneholde en funksjon som tar inn en annen partikkel som parameter og beregner kraften fra Coulombs lov som virker mellom dem. Kraften i absoluttverdi skal så returneres. 
+ 
+\textbf{Hint: } For å beregne avstanden $r$ mellom partiklene, kan \texttt{np.linalg.norm} brukes. 
+\subsection*{b)}
+Lag så en testfunksjon \textit{utenfor} klassen for å teste om din implementasjon av Coulombs lov gir ønsket resultat. La så programmet kalle på testfunksjonen. 
+ 
+En mulig test som programmet ditt kan gjøre, er å lage to partikler som har $30 \,\si{\milli\meter}$ avstand mellom seg, hvorav den ene partikkelen har ladning $\SI{-1.602e-19}{\coulomb}$ og den andre $\SI{1.602e-19}{\coulomb}$. 
+ 
+Da skal funksjonen som beregner kraften som virker mellom partiklene gi at 
+\[
+F = \SI{2.565833688e-15}{\newton}
+\]
+ 
+Filnavn: \texttt{Particle\_Coulomb.py}
+
+\section*{Oppgave 7.3 - Uidentifisert flyvende objekt}
+\addcontentsline{toc}{section}{Oppgave 7.3 - Uidentifisert flyvende objekt - \texttt{UFO.py}}
+\subsection*{a)}
+Du skal skrive en klasse, \texttt{ObjectMovement}, som skal regne på bevegelsen til et objekt som flyr fritt gjennom luften ved jordoverflaten. Vi ser bort i fra luftmotstand, og regner i to dimensjoner - en horisontal akse $x$, og en vertikal akse $y$.
+ 
+Start klassen med en konstruktør som lagrer objektets initialposisjon \texttt{(x0,y0)}, og initialhastighet \texttt{(vx0,vy0)}. Inkluder også akselerasjonen ($a=\SI{-9.81}{m/s^2}$) her, gjerne som en keyword-variabel.
+ 
+Gi klassen to metoder \texttt{position} og \texttt{velocity} som tar inn et tidspunkt $t$, og returnerer objektets posisjon eller hastighet på dette tidspunktet.
+\begin{align*}
+p = p_0 + v_0t + \half at^2, \ \ \ \ v = v_0 + at
+\end{align*}
+Husk at du kan dekomponere bevegelsen i horisontal og vertikal retning, og bruke bevegelsesligningene langs hver akse. Her er det greit å huske at akselerasjonen bare virker i $y$-aksen.
+ 
+Skriv også en test-funksjon \texttt{test\_pos\_vel} som sjekker om posisjon og hastighet fra metodene \texttt{position} og \texttt{velocity} ved et gitt tidspunkt stemmer med eksakte verdier du har regnet ut med kalkulator (innenfor en toleranse).
+ 
+\subsection*{b)}
+Fordi objektet bare er under påvirkning av tyngdekraften, som er en konservativ kraft, skal summen av \textit{kinetisk} og \textit{potensiell} energi være bevart. Kinetisk energi er gitt som $E_k = \half m v^2$, og potensiell energi er (på jordens overflate) gitt som $E_p = mgy, \ \ g=\SI{9.81}{m/s^2}$.
+
+Husk at $v = \sqrt{v_x^2 + v_y^2}$.
+
+Skriv en funksjon \texttt{test\_energy\_conservation} som regner ut $E_k$ og $E_p$ på to ulike tidspunkt, og sjekker om summen av energiene er identisk for de to tidspunktene. Sett $m=1$.
+ 
+Filnavn: \texttt{UFO.py}
+ 
+ 
+ 
+\section*{Oppgave 7.4 - Løpere på ulike helninger}
+\addcontentsline{toc}{section}{Oppgave 7.4 - Løpere på ulike helninger - \texttt{Runner.py}}
+Vi skal nå lage en klasse som representerer løpere som sprinter ned ulike bakker med ulike vinkler. 
+ 
+\section*{a)}
+Løperne har masse $m$ kg og en startfart på $v_0$ m/s. Massen $m$, startfarten $v_0$ og helningsvinkelen $\theta$ skal tas inn som parametre til konstruktøren. Lag klassen som representerer en sprinter og lag en sprinter-instans med masse $m = 80\;$kg, startfart $v_0 = 5\;$m/s og $\theta = \ang{30}$. 
+ 
+\section*{b)}
+Utvid klassen fra a) slik at den inneholder en funksjon \texttt{\_\_str\_\_}(denne funksjonen kalles automatisk når vi prøver å printe instansen). \\
+Funksjonen skal returnere en string som inneholder løperes masse, startfart og helningsvinkel til bakken løperen sprinter på. Pass på at det kommer tydelig fram i string-en hva hver enkelt verdi representerer. 
+ 
+Dersom vi prøver å printe løper-instansen fra a), kan vi f.eks få:
+\begin{verbatim}
+Sprinter with 
+ mass: 80 kg 
+ initial velocity: 5 m/s
+ angle: 30 degrees
+\end{verbatim} 
+ 
+\section*{c)}
+Nå skal også klassen ha en funksjon som regner ut hvor lang tid løperen vil bruke for å løpe ned hellingen $d$ meter. \\
+Vi forenkler kraften $F_{\text{d}}$ som driver løperen fram ved å sette $F_{\text{d}} = 400\,\si{\newton}$. \\
+ Utvid klassen med en funksjon som tar inn avstanden $d$ som parameter. Tiden $T$ som løperen vil bruke for å løpe $d$ meter kan en vise er
+\[
+T = -\frac{v_0}{g\sin\theta + \frac{1}{m}400} + \frac{\sqrt{v_0^2 + 2d\qty(g\sin\theta + \frac{1}{m}400) }}{g\sin\theta + \frac{1}{m}400}
+\]
+ 
+Bruk denne funksjonen og skriv ut hvor lang tid løperen fra deloppgave a) vil bruke. 
+ 
+Filnavn: \texttt{Runner.py}
+ 
+\section*{Oppgave 7.5 - Massesenter}
+\addcontentsline{toc}{section}{Oppgave 7.5 - Massesenter - \texttt{center\_of\_mass.py}}
+Når vi jobber med med flere legemer, er det ofte nyttig å jobbe med \textit{massesenteret} mellom legemene. Massesenteret er en posisjon som ofte brukes som et referansepunkt. 
+ 
+Hvis vi har $N$ legemer der $j$-te legeme har masse $m_j$ og posisjon $\vec{r}_j$, er massesenteret definert som:
+\begin{align*}
+\vec{R} &= \frac{m_1\vec{r}_1 + m_2\vec{r}_2 + \dots + m_N\vec{r}_N }{m_1 + m_2 + \dots + m_N} 
+\end{align*}
+ 
+I denne oppgaven kommer vi til å jobbe med arrays med lengde 2 som representerer et legemets posisjon. Første element i arrayet vil representere legemets x-koordinat, mens andre element i arrayet vil representere legemets y-koordinat.
+ 
+Vi skal nå se på massesenteret blant et utvalg partikler. 
+\subsection*{a)}
+Definér en partikkel klasse som tar inn en partikkels posisjon og masse i konstruktøren.  
+\subsection*{b)}
+Opprett fem partikkel-instanser der $j$-te partikkel har posisjon $r_j = \qty(j,2\cdot j)$ og masse $m_j = j\cdot 10^{-30}\,$kg. 
+ 
+\textbf{Hint:} En måte en kan opprette instansene på, er å opprette dem gjennom en for loop og lagre dem i en liste
+\subsection*{c)}
+La programmet ditt finne massesenteret mellom de fem partiklene du opprettet i b). 
+ 
+Filnavn: \texttt{center\_of\_mass.py}
+ 
+\end{document}
+ 
+ 
+ 
+ 
+

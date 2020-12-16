@@ -1,0 +1,180 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage[margin=1.5cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+
+\begin{document}
+
+\section*{Oppgave 5.1}
+Her skal listen konverteres til arrays ved bruk av \texttt{np.array}. Det skal ikke brukes noen loops for å utføre beregningene.
+\lstinputlisting[style=py]{pull_crates.py}
+Resultat:
+\begin{verbatim}
+>>> Total forces: 262.5 N
+\end{verbatim}
+\newpage
+\section*{Oppgave 5.2}
+I denne oppgaven skal de plotte to funksjoner i samme plott. Bevegelsesmengdene bør helst være funksjoner, og det skal sendes inn en tidsarray i det spesifiserte intervallet.
+\lstinputlisting[style=py]{momentum_plot.py}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_momentum_plot.pdf}
+\end{figure}
+
+
+
+\newpage
+\section*{Oppgave 5.3}
+Her er det vel egentlig bare å bytte ut listene med arrays, og loopen med et funksjonskall. Det skal ikke en eneste loop eller liste i resultatet.
+\lstinputlisting[style=py]{capacitor_vectorization.py}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_capacitor_vectorization.pdf}
+\end{figure}
+
+
+
+\newpage
+\section*{Oppgave 5.4}
+Viktig å ikke bruke $\lambda = 0$, og at $\lambda$ starter på $\SI{10}{nm}$ som spesifisert i oppgaven, for å unngå å dele på 0. Det bør ideelt være satt av nok punkter til $\lambda$-arrayet til at grafen ikke ser hakkete ut (type 50+). Det er fint med enheter på aksene, men $B(\lambda)$ har en unødvendig komplisert enhet, så det er ikke så farlig om den ikke er med.
+\lstinputlisting[style=py]{Planck_curves.py}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_Planck_curves_a.pdf}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_Planck_curves_b.pdf}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_Planck_curves_c.pdf}
+\end{figure}
+
+
+\newpage
+\section*{Oppgave 5.5}
+$y(t)$ bør implementeres som en funksjon.
+
+Pass på integer division i k/m.
+
+Akkurat hvordan for loopen i a) er konstruert er ikke så viktig så lenge den funker.
+
+I b) skal koden være vektorisert, og alle loops og lister skal være borte.
+
+a) og b) skal gi helt identiske arrays, som betyr at plottene skal overlappe 100\%.
+
+\lstinputlisting[style=py]{oscilating_spring.py}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_oscilating_spring.pdf}
+\end{figure}
+
+
+\newpage
+\section*{Oppgave 5.6}
+Det er vel egentlig bare å plotte funksjonen oppgitt i oppgaven med de gitte parameterene mot vinkelintervallet.
+
+I b) skal arrayene fra oppgave a) settes i formelen som konverterer polarkoordinater til kartesiske koordinater, og x og y skal plottes mot hverandre.
+\lstinputlisting[style=py]{planetary_motion.py}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_planetary_motion1.pdf}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig_planetary_motion2.pdf}
+\end{figure}
+
+\pagebreak
+\section*{Oppgave 5.7}
+I denne oppgaven brukes \texttt{np.polyfit(x,y,1)} - en 'ny' funksjon som utfører en regresjon mellom de gitte punktene langs hhv. x- og y-aksen. Tallet \texttt{1} forteller bare at vi tilpasser et førstegradspolynom til punktene. 
+\lstinputlisting[style=py]{estimate_h.py}
+\subsection*{a)}
+\includegraphics[width=.7\textwidth]{fig_estimate_h_a.pdf}
+
+\subsection*{b)}
+Estimert h:
+\begin{verbatim}
+>>> Estimate of h: 6.50987e-34
+\end{verbatim}
+\subsection*{c)}
+\includegraphics[width=0.7\textwidth]{fig_estimate_h_c.pdf}
+
+
+\section*{Oppgave 5.8} 
+Greit å bruke arrays her. 
+\lstinputlisting[style=py]{pendulum.py}
+\includegraphics[width=0.8\textwidth]{fig_pendulum.pdf}
+
+
+
+\newpage
+\section*{Oppgave 5.9}
+Her er det et poeng i at de skal plotte alle baner i \textit{ett} plott, samt kunne bruke \texttt{plt.legends}. Det burde komme tydelig fram hva som skiller banene fra hverandre. 
+\lstinputlisting[style=py]{plot_throw_ball.py}
+
+
+
+\newpage
+\section*{Oppgave 5.10}
+Mye likt fra boken. Det som kan være utfordrende, er å beholde to grafer i ett plott. Dette kan gjøres ved å enten starte en ny figur med \texttt{np.figure()} (fortrukket), er ha \texttt{np.show()} i selve loopen (greit, men ikke så elegant). 
+\lstinputlisting[style=py]{angular_wavefunction.py}
+\includegraphics[scale=0.5]{fig_angular_0.pdf}
+\includegraphics[scale=0.5]{fig_angular_1.pdf}
+\includegraphics[scale=0.5]{fig_angular_2.pdf}
+\end{document}
+
+

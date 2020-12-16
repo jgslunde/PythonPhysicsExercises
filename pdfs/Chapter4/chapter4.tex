@@ -1,0 +1,232 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+\begin{document}
+
+
+\section*{Exercise 4.1 - Heisenberg's uncertainty relation}
+\addcontentsline{toc}{section}{Exercise 4.1 - Heisenberg's uncertainty relation - \texttt{uncertainty\_Heisenberg.py}}
+Heisenberg proved in 1927 that we cannot exactly know the velocity of an particle and its position \textit{at the same time}. This means that if we know precisely the velocity of a particle, we will not be able to have a precise measurement of the position of the particle, and vice versa. \\ This can be written mathematically as:
+\[
+\Delta x \Delta p \geq \frac{h}{4\pi}
+\]
+where $\Delta x$ is the uncertainty (a measurement of how precise a measurement is) of the position of the particle and $\Delta p$ is the uncertainty of the momentum of the particle\footnote{The momentum is defined by the velocity of the particle. If we know the momentum and the mass of the particle, then we will know the velocity of it. More precisely, the momentum $p$  is defined as $p = mv$ where $m$ is the mass of the particle and $v$ the velocity of the particle}.
+
+We will use that 
+Vi bruker at $h \approx \SI{6.626e-34}{\joule.\second}$.
+
+\subsection*{a)}
+Write a program which takes  $\Delta x$ and $\Delta p$ as arguments on the command-line. The program must then test the arguments in an \texttt{try-except}-block and display an appropriate message if the user has not provided the program enough arguments or the given $\Delta x$ and $\Delta p$ cannot be converted to floats. 
+
+\subsection*{b)}
+The program must then call a test function which you have implemented. The test function must receive $\Delta x$ and $\Delta p$ as parameters and test whether the uncertainty principle holds for the given uncertainties.
+An appropriate message has to be displayed if the principle does not hold. Let the function use \texttt{assert} to test the relation. 
+
+Test your program where 
+
+$\Delta x_1 = \SI{3.10165e-9}{\m}$, $\Delta p_1 = \SI{1.7e-26}{\kg \meter .\per \second}$ 
+
+and
+
+$\Delta x_2 = \SI{5.2e-32}{\m}$, $\Delta p_2 = \SI{1e-3}{\kg \meter .\per \second}$.
+
+The uncertainties $\Delta x_1$ and $\Delta p_1$ does not violate the principle. However, the uncertainties $\Delta x_2$ and $\Delta p_2$ will violate with the principle (and your program should therefore display an error message for this case). 
+
+\textbf{Hint:} A low value such as $1.7\times 10^{-26}$ can be represented on the command-line as \texttt{1.7e-26}. 
+
+Filename: \texttt{uncertainty\_Heisenberg.py}
+
+
+\section*{Exercise 4.2 - Particle accelerator}
+\addcontentsline{toc}{section}{Exercise 4.2 - Particle accelerator - \texttt{particle\_accelerator.py}}
+An electric field of strength $E$ will apply a force $F = qE$ onto a particle with electric charge $q$.\\
+In one dimension, with an initial velocity $v_0$, the particle's velocity and position will be given as
+
+\[	x(t) = v_0t + 0.5\frac{q E}{m} t^2
+\]
+and
+\[	v(t) = v_0 + \frac{q E}{m} t
+\]
+
+\subsection*{a)}
+Consider an electron, which has a mass $m\approx \SI{9.1e-31}{kg}$ and electric charge $q \approx \SI{-1.6e-19}{C}$, caught in an electric field of strength $E = \SI{0.02}{N/C}$. \footnote{We consider all movement to be one dimensional, and all forces and velocities to have the same positive direction. This means that an electric field with a positive field strength will accelerate the electron in the negative direction, due to its negative charge.}
+
+Make a program that asks the user for values for $v_0$ and $t$, and prints the position and velocity of the electron.
+
+Test your program by checking the electrons position and velocity at $t = \SI{15}{s}$ with $v_0 = \SI{220}{m/s}$.
+
+\subsection*{b)}
+Rewrite your program to take $v_0$ and $t$, as well as $q$ and $m$ from the command line. Use a try/except block to initialize the variables, in case the user provides too few, or they cannot be converted to floats. In that case, ask the user for the parameters as input, like in exercise b).
+
+Protons have mass $m \approx \SI{1.67e-27}{kg}$ and electric charge $q \approx \SI{1.6e-19}{C}$. Neutrons have virtually the same mass as protons, and no electric charge.
+
+Check the position and velocity of these two particles with the same parameters as in exercise a).
+
+Filename: \texttt{particle\_accelerator.py}
+
+
+\section*{Exercise 4.3 - Relativistic user input}
+\addcontentsline{toc}{section}{Exercise 4.3 - Relativistic user input - \texttt{momentum\_input.py}}
+In exercise 2.2 we compared the classical and relativistic momentum of an object with mass $m$ and velocity $v$.
+\begin{align*}
+p_{clas} &= m\cdot v
+\\
+p_{rel} &= m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+
+\subsection*{a)}
+Write a program which asks the user for the velocity and mass of an object, and calculates the momentum of the object. Write your program such that it uses the classical formula if the given velocity is small enough that the classical formula is a good approximation to the relativistic one. Otherwise, use the relativistic formula. Use your results from exercise 2.2 to decide when the classical formula is a 'good enough' approximation.
+
+If you haven't done 2.2, you may use the classical formula for velocities lower than $v = 1/3c \approx \SI{e8}{m/s}$.
+
+\subsection*{b)}
+Rewrite your program such that $m$ and $v$ are taken as arguments in the terminal, rather than as keyboard input.
+
+\subsection*{c)}
+You shall now expand your program from b), such that it thoroughly checks if the input you get is both physically valid, and won't break your program. Your program should include the following functionality:
+\begin{itemize}
+\item A Try/Except block for initiating the terminal arguments. The possible errors these can give are a \texttt{IndexError} if the number of terminal arguments is less than three (the program itself, $m$, and $v$.), and a \texttt{ValueError} if one of the inputs cannot be converted to a float.
+\item Raise a \texttt{ValueError} if the given mass is not positive.
+\item Raise a \texttt{ValueError} if the absolute value of the velocitiy is larger than the speed of light.
+\end{itemize}
+
+Include an explanatory text to the user for each of the errors.
+
+Filename: \texttt{momentum\_input.py}
+
+
+
+\section*{Exercise 4.4 - How large friction?}
+\addcontentsline{toc}{section}{Exercise 4.4 - How large friction? - \texttt{slide\_books\_friction.py}}
+Suppose you have several books placed at an inclined slope with angle $\theta$. 
+
+A book will precisely begin to slide when the friction force $f$ is:
+\[
+f = \mu_smg\cos\theta
+\]
+where $m$ is the mass of the book (in \si{\kg}), $\mu_s$ the static coefficient of friction and $g = \SI{9.81}{m/s^2}$.
+The static coefficient of friction varies depending on which material the surface is made of. 
+
+We are given a collection of data, \texttt{slide\_books.dat}, of the books. The file consists data of which mass $m$ each book has, different angles $\theta$ for the inclined slope and static coefficients of friction. 
+
+\subsection*{a)}
+Write a program which opens \texttt{slide\_books.dat} and reads the values for $m$, $\theta$ and $\mu_s$. Make sure that your program is written such that it can read and store arbitrary number of values for $m$, $\theta$ and $\mu_s$. 
+
+\subsection*{b)}
+Extend your program from a) and use the stored values to calculate how large the friction must be for each book to slide for every angle $\theta$ and every static coefficient of friction $\mu_s$. 
+
+Make sure that your program converts the angles $\theta$ to radians when calculating the friction force $f$! To do the converting, use the following relation to convert from degrees to radians: 
+\[
+\text{angle in radians} = \frac{\text{(angle in degrees)} \cdot \pi}{180}
+\]
+
+\newpage
+The results should then be written to file. The formatting must be on a similar form as the following example:
+\begin{verbatim}
+--- Book with mass 4.33 kg ---
+theta = 0.93 rad
+coefficient of friction = 0.34
+needed friction force is 8.69 N
+
+coefficient of friction = 0.2
+needed friction force is 5.11 N
+
+coefficient of friction = 0.55
+needed friction force is 14.06 N
+
+coefficient of friction = 0.4
+needed friction force is 10.23 N
+\end{verbatim}
+
+Filename: \texttt{slide\_books\_friction.py}
+
+
+\section*{Exercise 4.5 - Newton's law of gravitation}
+\addcontentsline{toc}{section}{Exercise 4.5 - Newton's law of gravitation - \texttt{newton\_gravitation\_file.py}}
+We saw in exercise 2.4 how the gravitational force between two objects interacts using Newton's gravitational law:
+	\begin{equation*}
+	F = G\frac{m_1m_2}{r^2}
+	\end{equation*}
+where $m_1$ and $m_2$  are the mass of the objects and $r$ the distance between them. 
+
+The constant $G$ is the gravitational constant which has value
+\[
+G = \SI{6.674e-11}{\cubic\meter\per\kilogram\per\squared\second}
+\]
+We will see how much the gravitational force interacts between one object with mass $M$ kg and $N$ other objects. The $i$-th object has mass $m_i\,$kg and distance $r_i$ from the object with mass $M$. 
+
+Write a program which reads a file and uses the values from the file to calculate and present the total gravitational force which acts on the object with mass $M$. 
+
+You can assume that the files that your program should be able to read has the same structure as this example:
+\lstinputlisting{newton_objects.dat}
+The name of this file is \texttt{newton\_objects.dat}  which can be found here: (lenke-til-fil).
+
+The $i$-th line contains information about the $i$-th object. The first value is $m_i$ and the second $r_i$. 
+
+The program should take the mass $M$ as first argument in the command-line and a filename to the file containing data of the $N$ objects as a second argument. 
+
+The program must then do the following in a \texttt{try-except}-block:
+\begin{itemize}
+	\item Display an appropriate message and quit if the user forgets to write the mass $M$ or the filename as arguments to the commandline. \\
+	In other words, the program must display the error message and quit if an \texttt{IndexError} has occurred. 
+	\item Display an appropriate message and quit if the user writes in something for $M$ which cannot be converted to float. \\The error which will occur is a \texttt{ValueError}.  
+	\item Display an appropriate message and quit if the user writes a path to a file which does not exists the program. \\The error which occur will be an \texttt{IOError}. 
+\end{itemize}
+
+Let your program read \texttt{newton\_objects.dat} and set $M = 0.7\,$kg.
+
+Filename: \texttt{newton\_gravitation\_file.py}
+
+
+
+
+\end{document}

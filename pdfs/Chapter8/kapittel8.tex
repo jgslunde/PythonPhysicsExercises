@@ -1,0 +1,221 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+\begin{document}
+\section*{Oppgave 8.1 - Energikonservering}
+\addcontentsline{toc}{section}{Oppgave 8.1 - Energikonservering - \texttt{check\_energy\_conservation.py}}
+
+Nå skal vi se på hvordan vi kan bruke generering av tilfeldige tall for å bekrefte et fysisk fenomen. Dette fenomenet som vi skal se på, er \textit{energikonservering}. Energikonservering brukes ofte når vi løser problemer i fysikk. Et legemes totale energi $E$ kan deles inn i to hovedkategorier: kinetisk energi $E_k$ og 
+potensiell energi $E_p$. Det finnes også flere former for energi, men vi ser bort i fra disse i denne oppgaven. 
+ 
+Vi har da at legemets totale energi $E$ kan skrives som $E = E_k + E_p$. 
+Dersom vi har konservering av energi, så betyr det at for \textit{uansett} tid $t$ vi måler legemets energi ved vil energien $E$ være den samme. Vi kan skrive dette som
+\begin{align*}
+E_0 &= E_1 \\
+E_{k,0} + E_{p,0} &= E_{k,1} + E_{p,1}
+\end{align*}
+der $E_0$ og $E_1$ er de totale energiene målt ved de ulike tidene $t_0$ og $t_1$. 
+ 
+Kinetisk energi og potensiell energi for et legeme som blir kun påvirket av gravitasjonskraften er
+\begin{align*}
+E_k &= \frac{1}{2}mv(t)^2 \\
+E_p &= mgy(t)
+\end{align*}
+ 
+Vi ser på en ball som blir kastet rett opp. Høyden $y(t)$ og farten $v(t)$ til ballen, $y(t)$, ved en tid $t$ kan vi finne ved
+\begin{align*}
+y(t) &= -gt^2 + v_0t \\
+v(t) &= -gt + v_0
+\end{align*}
+der $g = 9.81\,\mathrm{m/s^2}$ og $v_0\,$m/s er kastefarten. 
+ 
+Lag en testfunksjon som tar inn $N$, $m$ og $v_0$ som parametre og sjekker om vi har energikonservering. \\
+La funksjonen generere $N$ tilfeldige verdier for tiden $t_0$ og $N$ tilfeldige verdier for tiden $t_1$. Verdiene skal ligge mellom 0 og $\frac{v_0}{g}$. \\
+For alle verdier av $t_0$ skal programmet regne ut $E_0$, og tilsvarende skal programmet regne ut $E_1$ for alle verdier av $t_1$. \\
+Sjekk så om verdiene er omtrent like, og bruk \texttt{assert} for å avbryte programmet og skrive ut passende feilmelding dersom vi ikke har energikonservering. 
+ 
+Sett $N = 100$, $m = 0.057\,$kg og $v_0 = 17\,$m/s og kall på testfunksjonen for disse parametrene. 
+ 
+\textbf{Hint:} Mye av koden kan vektoriseres - se det nederste eksempelet på s.510 i boken  for hvordan testing kan vektoriseres. 
+ 
+Filnavn: \texttt{check\_energy\_conservation.py}
+
+
+
+\section*{Oppgave 8.2 - Tilfeldig nedbrytning}
+\addcontentsline{toc}{section}{Oppgave 8.2 - Tilfeldig nedbrytning - \texttt{random\_decay.py}}
+Vi har tidligere studert hvordan en mengde radioaktivt materiale nedbrytes over tid, fra en rent analytisk formel, gitt som
+\begin{align}
+N(t) = N_0\exp{-t/\tau}
+\label{eqn:8.2}
+\end{align}
+ 
+Med vår nye kjennskap til tilfeldige tall kan vi løse problemet på en mer numerisk måte, ved å modellere hvert atom individuelt.
+ 
+Hvert atom i et radioaktivt materiale har en sjanse $p$ for å nedbrytes hvert sekund. Vi kan modellere materialet som en array, hvor hvert element representerer et atom. Vi gir hver atom en verdi $1$, som representerer at atomet ikke er nedbrutt, eller en verdi $0$.
+ 
+Vi skal se på et isotop av nitrogen, \textit{nitrogen-16}, hvor hvert atom har en sjanse $p = 0.0926$ (eller $9.26\%$) for å nedbrytes hvert sekund.
+ 
+\subsection*{a)}
+Vi skal først studere det første sekundet av nedbrytningen. Lag et array av lengde 40 med verdier $1$ (som representerer 40 atomer som ikke er nedbrutt), og loop over hvert element i arrayet for å bestemme om hvert atom nedbrytes til $0$ eller ikke. Du kan gjøre dette ved å sammenligne tallet $p$ med et tilfeldig generert tall i intervallet $[0,\ 1]$.
+ 
+Print det nye arrayet, og bekreft at noen av atomene faktisk ble nedbrutt til $0$.
+ 
+\subsection*{b)}
+Repeter prosessen over 20 sekunder ved å legge en til for loop rundt hele koden.
+ 
+Implementer også et nytt array som lagrer hvor mange atomer som gjenstår etter hver iterasjon. Du kan gjøre dette ved med å bruke funksjonen \texttt{numpy.sum()} på arrayene\footnote{Denne funksjonen summerer opp alle verdiene i arrayet. Dette betyr at nedbrutte atomer teller som 0, og gjenværende som 1.}. Få også med tidspunkt $t=0$ i arrayet, som er før første iterasjon i loopen.
+ 
+\subsection*{c)}
+Plot mengden gjenværende atomer over tid. Inkluder også den analytiske løsningen for nedbrytingen av nitrogen-16, gitt av \ref{eqn:8.2}. Sett $N_0$ lik antallet atomer, og $\tau = \SI{10.3}{s}$ (som er et resultat av valget av $p$).
+ 
+Prøv å øke antallet atomer i simuleringen, og (forhåpentligvis) observer at den numeriske løsningen blir mer og mer lik den analytiske.
+ 
+Filnavn: \texttt{random\_decay.py}
+ 
+ 
+ 
+ 
+ 
+ 
+\section*{Oppgave 8.3 - Optimale skytevinkler}
+\addcontentsline{toc}{section}{Oppgave 8.3 - Optimale skytevinkler - \texttt{optimal\_angles\_shoot.py}}
+Du har laget en liten ballkanon som skal treffe et målt område på en vegg (har du løst 3.3 i dette heftet tidligere, kan du godt gjenbruke og modifisere koden i denne oppgaven). Området begynner ved en høyde $h_0$ og slutter ved en høyde $h_1$ på veggen. 
+Høyden til ballen kan modelleres ved
+\begin{align*}
+y(t) =  -\frac{1}{2}g t^2 + v_0t\sin\theta
+\end{align*}
+der $g = 9.81\;\mathrm{m/s^2}$, $v_0\:$m/s skytefarten og $\theta$  skytevinkelen. 
+Ballen treffer veggen ved en tid $T = \dfrac{b }{v_0\cos\theta}$, der $b$ er avstanden (i meter) mellom kanonen og veggen. 
+ 
+\subsection*{a)}
+Lag et program som genererer $N$ verdier av $\theta$ ved bruk av Pythons \texttt{uniform(0,$\pi$)} eller Numpys \texttt{uniform(0,$\pi$,$N$)}.\\
+Verdiene for $\theta$ skal sendes inn som parameter til en funksjon som sjekker om kanonen treffer innenfor området ved de gitte $\theta$-ene. De $\theta$-ene som gir at ballen treffer treffer det malte området skal bli lagret i en liste eller array. Listen eller array-et skal så returneres av funksjonen. 
+ 
+Sett $N = 1000$, $h_0 = 3\,$m, $h_1 = 3.25\,$m, $b = 3.5\,$m og $v_0 = 25\,$m/s og kjør programmet for disse parametrene. 
+\subsection*{b)}
+Bruk listen eller array-et som ble returnert fra funksjonen i a) for å finne gjennomsnittet $\theta'$ av de vinklene som fikk ballen til å treffe det avgrensede området. Hvis listen er tom, skal programmet generere nye $N$ verdier for $\theta$ helt til den returnerte listen eller array-et ikke er tom. Dette kan for eksempel gjøres ved å ha en while loop som vil kjøre så lenge listen er tom. 
+ 
+La programmet gjøre det samme som i a) med den forskjell i at verdiene for $\theta$ blir generert ved \texttt{random.gauss($\theta'$,0.05)} eller \texttt{np.random.uniform($\theta'$,0.05,$N$)}. 
+ 
+La programmet ditt skrive ut hvor mange vinkler fra a) og fra denne deloppgaven som traff området. Hvordan er antallet vinkler som treffer området sammenlignet med antallet som ble generert i a)?
+ 
+\textbf{Kommentarer til resultatet i b):} Verdiene av $\theta$ i a) ble generert slik at verdiene mellom 0 og $\pi$ var like sannsynlige. I b) derimot, ble verdiene generert ved å bruke en \textit{normal fordeling} sentrert om $\theta'$. 
+
+Normalfordelingen har en bjelleform og forteller oss hvor sannsynlig det er for at vi trekker verdier i et område om $\theta'$.  
+Verdien til $\theta'$ vil være mest sannsynlig å få, mens sannsynligheten til å få andre verdier vil minke jo større differansen er mellom verdiene og $\theta$. Hvor brått sannsynligheten vil synke, er også avhengig av en ekstra verdi, kalt standardavviket, som i dette tilfellet er 0.05 (som er funnet ved litt eksperimentering).  
+
+Jo større standardavvik en bruker, jo mest sannsynlig blir de andre verdiene, og mindre standardavvik vil gi at de andre verdiene blir mindre sannsynlige å få. 
+ 
+Filnavn:\texttt{optimal\_angles\_shoot.py}
+ 
+
+
+\section*{Oppgave 8.4 - Varm gass}
+\addcontentsline{toc}{section}{Oppgave 8.4 - Varm gass - \texttt{gaussian\_velocities.py}}
+I denne oppgaven skal vi studere hastigheten til partikler i en varm gass. Temperatur er egentlig bare tilfeldig uorganisert bevegelse. Hvis gassen står stille, vil selvsagt den totale bevegelsen til alle partiklene i gassen være 0, men det forekommer fortsatt mye intern bevegelse.
+ 
+Partikler i en gass med absolutt temperatur $T$ har hastigheter som er normalfordelt (Gaussisk fordelt) rundt et gjennomsnitt på 0, med et standardavvik \footnote{Standardavviket representerer bredden på fordelingskurven, og et høyere standardavvik bestyr større hastighet, og høyere temperatur.} $s = \sqrt{\frac{kT}{m}}$, hvor $k = \SI{1.38e-23}{m^2.kg.s^{-2}.K^{-1}}$ er Boltzmann's konstant. Denne fordelingen gjelder individuelt for hastigheten langs hver akse, $(v_x,v_y,v_z)$.
+ 
+Vi kan generere tilfeldig normalfordelte tall med numpyfunksjonen \texttt{numpy.normal(m,s,shape)}, hvor \texttt{shape} er dimensjonene til arrayet at tilfeldige tall. For å representere \texttt{N} partikler med normalfordelt hastighet langs hver akse, trenger vi et array på formen \texttt{shape = (N,3)}. Dette betyr at hvert element i arrayet representerer en enkelt partikkel, som i seg selv er en array av 3 elementer, som igjen representerer hastigheten langs hver akse.
+ 
+\subsection*{a)}
+Set $N = 20$, $m = \SI{e-22}{kg}$, $T = \SI{300}{K}$, bruk numpyfunksjonen til å lagre et array av normalfordelte hastigheter.\\
+Bruk \texttt{random.choice()} funksjonen til å velge ut en tilfeldig av de 20 partiklene, og print hastighetene til partikkelen til terminalen.
+ 
+\subsection*{b)}
+Den totale kinetiske energien til $N$ partikler i en gass av temperatur $T$ er gitt som
+\[	E_k = \frac{3}{2}kTN
+\]
+ 
+En alternativ metode for å regne ut den kinetiske energien til gassen er å summere opp den kinetiske energien til hver enkelt partikkel, som er gitt som
+\[	E_k = \frac{1}{2}mv^2
+\]
+Loop over hver partikkel, og beregn deres kinetiske energi ved å sette absoluttverdien av hastigheten, $|v| = \sqrt{v_x^2 + v_y^2 + v_z^2}$, inn i formelen over. Sammenlign resultatet med det du fikk fra den øverste formelen.
+ 
+Filnavn: \texttt{gaussian\_velocities.py}
+ 
+ 
+ 
+\section*{Oppgave 8.5 - Regndråper}
+\addcontentsline{toc}{section}{Oppgave 8.5 - Regndråper - \texttt{raindrops.py}}
+Vi skal se på \textit{terminalfarten} til mange regndråper. Terminalfarten er farten en regndråpe har når tyngdekraften trekker dråpen ned like mye som den møter luftmotstand. 
+ 
+For en regndråpe med radius $r\,$meter der vi antar dråpen har en perfekt kuleform, kan vi regne ut at terminalfarten $v_T$ (i \si{\meter.\per\second}) vil være
+\[
+v_T = \sqrt{\frac{8r\rho_v g}{3\rho C}}
+\]
+der $r\,\si{\meter}$ er radiusen til dråpen, $\rho_v = 1\,\si{g.\per\cubic\centi\meter} = 1000 \,\si{kg.\per\cubic\meter}$ er den omtrentlige tettheten til vann, $g = 9.81 \,\si{\meter.\per\square\second}$, $\rho = 1.293 \,\si{\kg.\per\cubic\meter}$ er omtrentlige tettheten til luft og $C = 0.47$ betegner hvor mye motstand regndråpen utgjør på sin omgivelse (i dette tilfellet: luften).
+ 
+\subsection*{a)}
+I denne deloppgaven skal vi \textit{ikke} bruke Numpy-modulen.
+ 
+Lag et program som generer $N = 100000$ ulike regndråper representert ved tilfeldige verdier for radius i intervallet $[1\,\si{\milli\meter}, 6\,\si{\milli\meter}) = [10^{-3}\,\si{\meter},6\cdot 10^{-3}\,\si{\meter}) $.
+ 
+ Programmet skal finne ut hvor lang tid det tar for å generere de $N$ regndråpene og beregne gjennomsnittet av terminalfartene til dem. 
+ 
+ Programmet skal tilslutt skrive ut den gjennomsnittlige terminalfarten og hvor lang tid programmet brukte. 
+ 
+ \subsection*{b)}
+Utvid programmet ditt slik at samme beregninger som i a) utføres, men nå med bruk av Numpy-modulen og vektorisering. 
+Skriv ut den gjennomsnittlige terminalfarten sammen med tidsbruket programmet brukte ved vektorisering og bruk av Numpy-modulen. 
+ 
+I denne deloppgaven vil du også kunne se en betydelig forskjell i tidsbruk sammenlignet med tidsbruket fra a). 
+ 
+\textbf{Hint:} For å ta tiden i sekunder til et program, kan du bruke \texttt{time}-modulen. Et eksempel på en kode som finner ut hvor lang tid programmet bruker for å skrive 'Hello, world!' til skjerm, er:
+\lstinputlisting[style=py]{tatid_pseudokode.py}
+ 
+Filnavn: \texttt{raindrops.py}
+\end{document}
+ 
+ 
+

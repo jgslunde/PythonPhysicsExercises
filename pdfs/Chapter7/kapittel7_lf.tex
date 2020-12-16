@@ -1,0 +1,110 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=1cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+\begin{document}
+
+\section*{Oppgave 7.1}
+Husk at 'self' parameteren må være med i alle metoder, selv om de ikke tar noen argumenter.
+
+Jeg kan forestille meg at det er mange måter å mislykkes i å tildele en attribute til en klasse, men enten funker det eller ikke. Det er selvsagt ikke lov å endre klasse-koden til å ha en ny attribute...
+\lstinputlisting[style=py]{Planet.py}
+
+
+\newpage
+\section*{Oppgave 7.2}
+\subsection*{a)}
+Her er det viktig at de får definert funksjonen som beskrevet i oppgaven ordentlig. Det er viktig de sender inn en partikkelinstanse som parameter for å regne ut Coulumbs lov for at studentene skal lære seg å hente ut attributter. For å finne avstanden mellom to partikler har \texttt{np.linalg.norm} blitt foreslått ,men andre metoder som finner den euklidske normen mellom posisjonene er også helt greit.
+\subsection*{b)}
+En helt standard testfunksjon der partikkelinstanser opprettes og testes. 
+\lstinputlisting[style=py]{Particle_Coulomb.py}
+
+\newpage
+\section*{Oppgave 7.3}
+Dekomponeringen gir at\\
+$x(t) = x_0 + v_{x0}t$\\
+$y(t) = y_0 + v_{y0}t + 0.5at^2$\\
+$v_x(t) = v_{x0}$\\
+$v_y(t) = v_{y0} + at$
+
+Testfunksjonen skal bare velge en t-verdi, sammenligne returen fra de innebyggede metodene med beregnede verdier.
+
+Energi testfunksjonen velger to t-verdier, og sammenligner resultatet av summen av de to oppgitte energifunksjonene.
+\lstinputlisting[style=py]{UFO.py}
+
+
+\newpage
+\section*{Oppgave 7.4}
+Det nye er å implementere og bruke en \texttt{\_\_str\_\_}-funksjon. Viktig at de passer på at helltallsdivisjon ikke oppstår når de bruker instanser av klassen.
+\lstinputlisting[style=py]{Runner.py}
+Resultat etter kjøring av denne koden:
+\begin{verbatim}
+>>> Sprinter with 
+			      mass: 80 kg 
+			      initial velocity: 5 m/s
+			      angle: 30 degrees
+>>> Finish runtime for distance 100 m: 4.017 s
+\end{verbatim}
+
+
+
+\newpage
+\section*{Oppgave 7.5}
+Her er hovedfokuset i å bruke instanser og utføre beregner på dem utenfor klassen. 
+\lstinputlisting[style=py]{Center_of_mass.py}
+Resultat:
+\begin{verbatim}
+>>> Center of mass in this system is:
+		[ 3.  6.]
+\end{verbatim}
+\end{document}
+
+

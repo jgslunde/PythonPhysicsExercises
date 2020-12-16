@@ -1,0 +1,194 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+
+\begin{document}
+	\section*{Exercise 1.1 - Density}
+\addcontentsline{toc}{section}{Exercise 1.1 - Density - \texttt{massdensity.py}}
+	Different materials has different densities. The density is defined as mass divided by the volume of the object, often given in \si{\kg.\per\cubic\meter}.
+	\begin{center}
+	\begin{tabular}{l | l  l  l  l l}
+			Materials & Polystyrene (low density) & Cork & Rhenium & Platinium \\ \hline 
+			Density (in \si{\kg.\per\cubic\meter}) &20 & 220  & 21020 & 21450
+	\end{tabular} 
+	\captionof{table}{Density of different materials}
+	\end{center}
+	A cube weights \SI{858}{g} and has volume 40 \si{\cubic\centi\meter}. 
+	
+	Write a program which find the density of the cube. Use your result from the program to determine which material the cube is made of. The cube is made of one from the given materials in the table. It may happen that your result will not be exactly  equal to one of the densities in the table. If this happens, you should choose the material which is closest to the result your program gives. 
+	
+	Filename: \texttt{massdensity.py}
+
+
+\section*{Exercise 1.2 - Calculate the solar mass}
+\addcontentsline{toc}{section}{Exercise 1.2 - Calculate the solar mass - \texttt{solarmass.py}}
+	The solar mass can be calculated by using the relation:
+	\begin{equation}\label{eq:solarmass}
+	M_{Sun} = \frac{4\pi^2 \cdot\qty(\SI{1}{AU})^3}{G \cdot \qty(\SI{1}{yr})^2}
+	\end{equation}
+	In this task we will use approximate values for AU and G. 
+	The unit AU is an astronomical unit of length. Its value is defined to be the average distance between the Sun and Earth:
+	\[
+	\SI{1}{AU} = \SI{1.58e-5 }{\text{light years}}
+	\]
+	where
+	$
+		\SI{1}{light year} = \SI{9.5e12}{\km} 
+	$.
+	The constant G is called the gravitational constant and has the following value:
+	\[
+	G = \SI{6.674e-11}{\cubic\meter\per\kg\per\second} 
+	\]
+	
+	Write a program which calculates the solar mass by using \vref{eq:solarmass}. The calculated result must then be presented in kilogram using \texttt{print}. Your program should give that $M_{Sun} \approx 2.01 \cdot 10^{30}\,$kg.
+	
+	Filename: \texttt{solarmass.py}
+
+
+\section*{Exercise 1.3 - Half-life}
+\addcontentsline{toc}{section}{Exercise 1.3 - Half-life - \texttt{half\_life.py}}
+
+Certain atomic nuclei are unstable, and will over time decay into other nuclei, through emission of radiation. We call such atomic nuclei \textit{radioactive}. The process of radioactive decay is completely random, but for large collections of atoms, we can model how much remains of the original matter after a certain time.
+
+From an original mass $N_0$ of a radioactive material, the remaining mass after a time $t$ (in seconds) is given by the equation for radioactive decay:
+\begin{align}
+N(t) = N_0\exp{-t/\tau}
+\end{align}
+$\tau$ is the so-called 'mean lifetime' of the radioactive material, and represents the average lifespan of a single nucleus in the radioactive material. A larger value indicates a more stable nuclei, and it can vary from $\SI{e30}{s}$ for very stable materials, to $\SI{e-20}{s}$ for very unstable materials.
+
+
+\subsection*{a)}
+Carbon-11 is an unstable carbon isotope, and has a mean lifetime of $\tau = \SI{1760}{s}$.
+
+Make a program which calculates how much remains of an original mass $N_0 = \SI{4.5}{kg}$ of carbon-11 after 10 minutes.
+
+\textbf{Hint:} You can check whether your program works as intended by setting $t$ equal to 0, and a very large number, and see if your results are as expected.
+
+
+\subsection*{b)}
+The mean lifetime makes for a pretty formula, but we are more often talking about the \textit{half-life} of a radioactive material. The half-life represents the time it takes for the material to reduce to exactly half of its original mass. The relation between the mean lifetime and the half-life is given as
+\begin{align*}
+\tau = \frac{\halflife}{\ln 2}
+\end{align*}
+
+The half-life of carbon-11 is $\halflife = \SI{1220}{s}$. Rewrite your program such that it first calculates the mean lifetime from the half-life, and then calculates the remaining mass, just like in exercise a. Check that you get the same results as in exercise a.
+
+Filename: \texttt{half\_life.py}
+
+
+
+
+	\section*{Exercise 1.4 - The velocity of an atom}
+\addcontentsline{toc}{section}{Exercise 1.4 - The velocity of an atom - \texttt{velocity\_of\_atom.py}}
+	The atoms within a material is structured such that they create a lattice. 
+	We will look at an atom which moves along the surface of a material. Since the atoms are aligned as a lattice, we could use a periodic model to find the velocity of the atom moving across the surface: 
+	\begin{equation*}
+		v(x) = \sqrt{v_0^2 + \frac{2F_0}{m}\qty(\cos\qty(\frac{x}{n}) -1 )}
+	\end{equation*}
+	where $m$ is the mass of the atom, $x$ is its position, $v_0$ is its initial velocity and $n$ is a scaled distance between the atoms within the material. We set the force $F_0 = 1\,$N.\\
+	Find the velocity of the atom when $x = 1$, $v_0 = 2$, $n = 4$ and $m = 3$.
+
+	Filename: \texttt{velocity\_of\_atom.py}
+
+
+
+\section*{Exercise 1.5 - Correct Einstein's mistakes}
+\addcontentsline{toc}{section}{Exercise 1.5 - Correct Einstein's mistakes - \texttt{Einsteins\_errors.py}}
+
+Special relativity is the area of physics dealing with incredibly large velocities. In special relativity, the momentum $p$ of an object with velocity $v$ (in m/s), and mass $m$ (in kg) is given as
+\begin{align*}
+p = m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+where $c\approx \SI{300 000 000}{m/s}$ is the speed of light. The program below attempts to calculate the momentum of an object with speed equal to $1/3$ the speed of light, and a mass $m=\SI{0.14}{kg}$. The program has many errors, and doesn't work. Copy and run the program. Correct the errors, and make it work like intended.
+
+\lstinputlisting[style=py]{find_Einsteins_errors.py}
+
+Filename: \texttt{Einsteins\_errors.py}
+
+
+
+
+
+\section*{Exercise 1.6 - Rydberg's constant}
+\addcontentsline{toc}{section}{Exercise 1.6 - Rydberg's constant - \texttt{constant\_Rydberg.py}}
+
+Rydberg's constant $R_{\infty}$ for a heavy atom is used in physics to calculate the wavelength to spectral lines\footnote{The reason why we use $\infty$ in the constant's symbol is because we assume that the mass of the atomic nucleus if infinitely large compared to the mass of the electron. } . 
+
+The constant has been found to have the following value:
+\[
+R_{\infty} = \frac{m_ee^4}{8 \varepsilon_0^2h^3c }
+\]
+where
+\begin{itemize}
+	\item $m_e = \SI{9.109e-31}{\meter}$  is the mass of an electron
+	\item  $e = \SI{1.602e-19}{C}$  is the charge of a proton (also called the \textit{elementary charge})
+	\item $\varepsilon_0 = \SI{8.854e-12}{C.V^{-1}.\meter^{-1}}$ is the electrical constant
+	\item $h = \SI{6.626e-34}{J.s}$ is Planck's constant
+	\item $c = \SI{3e8}{\meter.\per\second}$ is the speed of light
+\end{itemize}
+These are physical constants which are widely used in physics. You will probably encounter these several times in other physics courses!
+
+Write a program which assigns the values of the physical constants to variables, and use the variables to calculate the value of Rydberg's constant. The program shall then present the result by using \texttt{print}. 
+
+See if your program gives that
+\[
+R_{\infty} = 10961656.2162\quad (\text{in }\mathrm{m^{-1}})
+\]
+Notice that this is only an approximate value since we have rounded the physical constants to three decimals. 
+
+Filename: \texttt{constant\_Rydberg.py}
+
+
+
+\end{document}
+
+

@@ -1,0 +1,201 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+\begin{document}
+
+
+	\section*{Exercise 2.1 - Measure time}
+	
+	A ball is dropped straight down from a cliff with height $h$. The position of the ball after a time $t$ can be expressed as:
+	\[
+	y(t) = v_0t - \frac{1}{2}at^2 + h
+	\]
+	where $a$ is the acceleration (in \si{\meter.\per\square\second}) and $v_0$ is the initial velocity of the ball (measured in m/s).
+	
+	We wish to find for how long time $t_1$ is takes the ball to pass a certain height $h_1$. In other words, we wish to find the value of $t_1$ such that $y(t_1) = h_1$. The position of the ball is measured per $\Delta t$ seconds. 
+	
+	Write a program which finds out how long time $t_1$ it takes before the ball reaches height $h_1$ by using a while loop.
+	
+	Here, we let $h = 10\, \si{\meter}$, $y_1 = 5\,\si{\meter}$, $\Delta t = 0.01\,\si{\second}$, $v_0 = 0\,\si{\meter.\per\second}$ and $a = 9.81\,\si{\meter.\per\square\second}$.
+	
+	\textbf{Hint: } We cannot use '\texttt{==}' in the while loop to find $t_1$ for when the ball pass $h_1$. This is because we are measuring the time in $\Delta t$ seconds where we most likely will measure the position of the ball \textit{after} it has reached $h_1$. The best thing we could do, is to increase the time by $\Delta t$ as long as the height of the ball is \textit{greater} than $h_1$. We can then set the time to be $t_1$ at once where the height of the ball is less or equal to $h_1$. 
+	So, our program will be inaccurate, but this is the best we can do, given the fact that we do not have infinitely many time points. 
+	
+	Filename: \texttt{throw\_ball\_height.py}
+\addcontentsline{toc}{section}{Exercise 2.1 - Measure time - \texttt{throw\_ball\_height.py}}
+
+
+\section*{Exercise 2.2 - Relativistic momentum}
+\addcontentsline{toc}{section}{Exercise 2.2 - Relativistic momentum - \texttt{relativistic\_momentum.py}}
+In classical physics, we define the momentum $p$ of an object with mass $m$ and velocity $v$ as
+\begin{align*}
+p = m\cdot v
+\end{align*}
+A satellite with mass $m = \SI{1200}{kg}$ is trapped in the gravity of a black hole. It accelerates quickly from velocity $v = 0$ to $v = 0.9c$, where $c$ is the speed of light, $c \approx \SI{3e8}{m/s}$.
+
+\subsection*{a)}
+Write a program which prints a nicely formatted table to the terminal, containing the speed of the satellite in one column, and the momentum of the satellite in the other. Use time-intervals of $0.1c$ between $0c$ and $0.9c$.
+
+\textbf{Hint:} Use scientific notation '\%e' when printing the values, to avoid incredibly large floats. Alternatively, '\%g', which picks the best notation for you. Try to limit the number of decimals to a reasonable number.
+
+
+\subsection*{b)}
+
+In exercise 1.5, we saw how the momentum of an object is defined in special relativity, which deals with physics at very large velocities. We defined the momentum as
+\begin{align*}
+p_{rel} = m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+This is the actual momentum of any object, but the classical version we used in exercise a) is a good approximation at 'small' velocities.
+
+Expand your program such that it prints a table with three columns, the third one containing the momentum as defined in special relativity.
+
+Filename: \texttt{relativistic\_momentum.py}
+
+
+
+
+\section*{Exercise 2.3 - Radioactive list}
+\addcontentsline{toc}{section}{Exercise 2.3 - Radioactive list - \texttt{radioactive\_list.py}}
+
+\subsection*{a)}
+In exercise 1.3 we studied the formula for radioactive decay, which tells us how much remains of a radioactive material with an original mass $N_0$, after a time $t$.
+\begin{align*}
+N(t) = N_0\exp{-t/\tau}
+\end{align*}
+
+Make a while loop which fills two lists: One with spaced time-points $t$, and one with values of $N(t)$ at these time-points. The loop should run until the remaining amount of material is below 50\% of the original. Start in $t=\SI{0}{s}$, and use time-steps of $\SI{60}{s}$. We are, as in exercise 1.3, looking at a mass $N_0 = \SI{4.5}{kg}$ of carbon-11, which has a time constant $\tau = \SI{1760}{s}$.
+
+
+\subsection*{b)}
+You might have noticed that by aborting the loop when half of the material is gone, the last element in our time-list should be the \textit{half-life} of the carbon-11, $\halflife$. From exercise 1.3 we remember that the half life of a material is simply the time it takes for half the material to decay.
+
+Test that this is true by printing and comparing the last element in your time-list to the half-life of carbon-11, defined as
+\[	\halflife = \tau \ln 2
+\]
+
+Remember that because your program uses time-steps of one minute, your measured half-life can have an error of up to 60 seconds.
+
+
+\subsection*{c)}
+Combine the lists into a nested list \texttt{Nt}, such that every element in the list \texttt{Nt} is a pair of matching $t$ and $N(t)$ values. For example, the first element \texttt{Nt[0]} of this list should be a list of \texttt{[0,\ 4.5]}.
+
+Use the new nested list to write nicely a formatted table of corresponding $t$ and $N(t)$ values to the terminal.
+
+Filename: \texttt{radioactive\_list.py}
+
+
+	\section*{Exercise 2.4 - Newton's law of universal gravitation}
+\addcontentsline{toc}{section}{Exercise 2.4 - Newton's law of universal gravitation - \texttt{newton\_gravitation.py}}
+
+	Newton's law of universal gravitation described how the gravitation acts as an attractive force between two objects:
+	\begin{equation*}
+		F = G\frac{m_1m_2}{r^2}
+	\end{equation*}
+	where $m_1$ and $m_2$ are the masses of the two objects which attracts each other and $r$ is the distance between them. 
+	
+	The constant $G$ is the gravitational constant which has the following value:
+	\[
+	G = \SI{6.674e-11}{\cubic\meter\per\kilogram\per\squared\second}
+	\]
+	
+	We will take a closer look at an object with mass $M = \SI{3}{kg}$ which is influenced by $N$ objects with mass  $m_1,m_2,\dots,m_N$. The $i$-th object has mass $m_i = \frac{i}{6}+2\,\mathrm{kg}$ and distance  $r_i = \sqrt{\qty(\frac{i}{4})^2 + 10}$ meters from the object with mass $M$. 
+	
+	The number of interacting objects is $N = 10$.
+	
+	Write a program which calculates the total force  $\sum_{i = 1}^N F_i = F_1 + F_2 + ... + F_N$ which affects the object with mass $M$. 
+	
+	Filename: \texttt{newton\_gravitation.py}
+
+	
+
+
+
+\section*{Exercise 2.5 - Trapped quantum particle}
+\addcontentsline{toc}{section}{Exercise 2.5 - Trapped quantum particle - \texttt{quantum\_trap.py}}
+Quantum mechanics is the part of physics that deals with reality at very small scales. One of the rules in quantum mechanics is that, sometimes, particles are only allowed to have specific energies, and can never have an energy in between these allowed levels. The particle must therefore jump straight from one energy level to another.
+
+When a particle is trapped in a tiny box\footnote{Also known as an infinitely deep square potential} of size $L$, quantum mechanics says that it is only allowed to have energies 
+\[	E_n = \frac{n^2h^2}{8mL^2}, \ \ \ \ n = 1,2,3\dots
+\]
+where $m$ is the particle's mass and $h$ is Planck's constant, \planck.
+
+Consider an electron with mass $\SI{9.11e-31}{kg}$, trapped in a box of size $\SI{e-11}{m}$. It starts at the lowest energy-level, $E_1$ (not $E_0$!), and jumps upwards, one step at a time, ending up at a much higher energy level, $E_{30}$. Each step from a level $E_i$ to a level $E_{i+1}$ will have required an energy
+\[  E_{i+1} - E_{i} = \frac{((i+1)^2-i^2)h^2}{8mL^2}
+\]
+
+Write a for loop which calculates the energy required for each step along the way, and saves them in a list. Sum also up the total energy the particle has used on its way upwards.
+
+Filename: \texttt{quantum\_trap.py}
+
+
+\newpage 
+\section*{Exercise 2.6 - Looping over radii of loops}
+To be able to drive through a loop, one need to have a minimal speed to not loose contact with the loop. 
+
+Suppose a stunt person must drive through a loop. For the stunt person to be in contact with the loop throughout the stunt, it is necessary that the person have a speed of at \textit{least}: 
+\[
+v = \sqrt{gr}
+\]
+ Here is $g = 9.81\,\mathrm{m/s^2}$ and $r$ the radius of the loop (in meters).
+
+You have been given a program which use a while loop to iterate through a list of radii $r$ of different loops. For every radius $r$ the program iterates through,the least speed $v$ is calculated and displayed: 
+\lstinputlisting[style=py]{while_loop_over_loops.py}
+The program is named \texttt{while\_loop\_over\_loops.py} which you can find here: path-to-file. 
+
+Change the given program such that it uses a for loop instead. Also, change the program such that it does not print the value of $v$ in the same loop $v$ has been calculated, but rather prints the $v$s in a separate for loop.  
+
+Filename: \texttt{for\_loop\_over\_loops.py}
+\addcontentsline{toc}{section}{Exercise 2.6 - Looping over radii of loops - \texttt{for\_loop\_over\_loops.py}}
+
+\end{document}
+
+
+

@@ -1,0 +1,236 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+\begin{document}
+\section*{Oppgave 4.1 - Heisenbergs uskarphetsrelasjon}
+\addcontentsline{toc}{section}{Oppgave 4.1 - Heisenbergs uskarphetsrelasjon - \texttt{uncertainty\_Heisenberg.py}}
+Heisenberg viste i 1927 at vi ikke kan vite eksakt en partikkels fart og posisjon \textit{samtidig}. Dette betyr at dersom vi vet ganske så nøyaktig hva posisjonen til en partikkel er, vil vi ikke vi ikke vite like nøyaktig hva farten til partikkelen er, og vice versa. \\
+Matematisk kan en skrive dette slik
+\[
+\Delta x \Delta p \geq \frac{h}{4\pi}
+\]
+der $\Delta x$ er usikkerhet (et mål på hvor nøyaktig målingen er) av partikkelens posisjon og $\Delta p$ er usikkerheten av partikkelens bevegelsesmengde\footnote{Bevegelsesmengden er definert ved farten til partikkelen. Dersom vi vet bevegelsesmengden og massen til partikkelen, vil vi også vite dets fart. Bevegelsesmengden $p$  er definert som $p = mv$ der $m$ er massen til legemet vi ser på (i vårt tilfelle: en partikkel) og $v$ farten til legemet vi ser på.}.
+ 
+Vi bruker at $h \approx \SI{6.626e-34}{\joule.\second}$.
+ 
+\subsection*{a)}
+Skriv et program som tar inn $\Delta x$ og $\Delta p$ som argumenter på kommandolinjen. Programmet skal så sjekke argumentene i en \texttt{try-except} block og gi feilmelding dersom det ikke har blitt gitt nok argumenter og argumentene kan ikke konverteres til flyttall. 
+ 
+\subsection*{b)}
+Definér en funksjon der $\Delta x$ og $\Delta p$ sendes inn som parameter. Testfunksjonen skal sjekke om uskarphetsrelasjonen holder for de gitte $\Delta x$ og $\Delta p$. Hvis relasjonen ikke er oppfylt, skal en passende feilmelding skrives. La funksjonen bruke \texttt{assert} til å teste relasjonen.
+ 
+Test programmet ditt for tilfellene der 
+ 
+$\Delta x_1 = \SI{3.10165e-9}{\m}$, $\Delta p_1 = \SI{1.7e-26}{\kg \meter .\per \second}$ 
+ 
+og 
+ 
+$\Delta x_2 = \SI{5.2e-32}{\m}$, $\Delta p_2 = \SI{1e-3}{\kg \meter .\per \second}$. 
+ 
+Usikkerhetene
+$\Delta x_1$ og $\Delta p_1$ bryter ikke med uskarphetsrelasjonen. Derimot usikkerhetene $\Delta x_2$ og $\Delta p_2$ gjør det (og derfor skal programmet ditt gi feilmelding for dette tilfellet). 
+ 
+\textbf{Hint:} For å representere en ganske så lav verdi som f.eks $1.7\times 10^{-26}$ på kommandolinjen, kan du skrive \texttt{1.7e-26}. 
+ 
+Filnavn: \texttt{uncertainty\_Heisenberg.py} 
+ 
+
+
+
+\section*{Oppgave 4.2 - Partikkelakselerator}
+\addcontentsline{toc}{section}{Oppgave 4.2 - Partikkelakselerator - \texttt{particle\_accelerator.py}}
+
+Et elektrisk felt med feltstyrke $E$ vil påvirke en partikkel med ladning $q$ med en kraft $F = qE$.\\
+En partikkel med initialhastighet $v_0$ etter en tid $t$ ha en posisjon og hastighet gitt som
+\[	x(t) = v_0t + 0.5\frac{q E}{m} t^2
+\]
+and
+\[	v(t) = v_0 + \frac{q E}{m} t
+\]
+ 
+\subsection*{a)}
+Elektroner har masse $m\approx \SI{9.1e-31}{kg}$ og elektrisk ladning $q \approx \SI{-1.6e-19}{C}$. Vi skal se på et elektron fanget i et elektrisk felt av styrke $E = \SI{0.02}{N/C}$. \footnote{Vi ser bare på bevegelse i én dimensjon. Merk at et elektron, på grunn av sin negative ladning, vil påvirkes av en negativ akselerasjon, med mindre feltstyrken også er negativ.}
+ 
+Skriv et program som spør brukeren etter verdier for $v_0$ og $t$, og printer posisjonen og hastigheten til elektronet ved dette tidspunktet.
+ 
+Test programmet ditt ved tidspunktet $t = \SI{15}{s}$ og initialhastigheten $v_0 = \SI{220}{m/s}$.
+ 
+\subsection*{b)}
+Skriv om programmet ditt slik at $v_0$ og $t$, samt nå også $q$ og $m$, hentes fra terminalen.\\
+Bruk en try/except blokk til å initialisere variablene, i tilfelle brukeren gir for få argumenter, eller de ikke kan konverteres til floats. I så fall skal programmet ditt spørre brukeren etter parametrene slik som i deloppgave a).
+ 
+Protoner har masse $m \approx \SI{1.67e-27}{kg}$ og elektrisk ladning $q \approx \SI{1.6e-19}{C}$. Nøytroner har (tilnærmet) lik masse som protoner, og ingen ladning.
+ 
+Print posisjonene og hastigheten til disse to partikklene med de samme parametrene som i deloppgave a).
+ 
+Filnavn: \texttt{particle\_accelerator.py}
+ 
+ 
+ 
+ 
+\section*{Oppgave 4.3 - Relativistisk brukerinput}
+\addcontentsline{toc}{section}{Oppgave 4.3 - Relativistisk brukerinput - \texttt{momentum\_input.py}}
+
+I oppgave 2.2 sammenlignet vi den relativistiske og klassiske bevegelsesmengden til et objekt med masse $m$ og hastighet $v$.
+\begin{align*}
+p_{clas} &= m\cdot v
+\\
+p_{rel} &= m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+ 
+\subsection*{a)}
+Skriv et program som spør om hastighet og masse, og regner ut objektets bevegelsesmengde. Skriv programmet ditt slik at det bruker den klassiske formelen dersom den gitte hastigheten er såpass lav at den klassiske er en god tilnærming, og den relativistiske ellers. Bruk resultatene dine fra oppgave 2.2 til å bestemme ved hvilke hastigheter den klassiske formelen er en grei nok tilnærming.
+ 
+Dersom du ikke har gjort 2.2 kan du bruke den klassiske for hastigheter under $v = 1/3c \approx 10^8\mathrm{m/s}$.
+ 
+ 
+\subsection*{b)}
+Skriv om programmet ditt slik at det henter $m$ og $v$ fra terminalen istedenfor som keyboard input.
+ 
+ 
+\subsection*{c)}
+Utvid programmet ditt fra oppgave b) til å grundig teste input'ene den får ved å implementere følgende tester:
+\begin{itemize}
+\item En \texttt{Try/Except} blokk til å initiere variablene. Du må inkludere både en \texttt{ValueError} og en \texttt{IndexError} i \texttt{Except}'en din, dersom det enten gis for få terminal argumenter, eller de ikke kan konverteres til float.
+\item En test med en \texttt{ValueError} dersom den gitte massen ikke er positiv.
+\item En test med en \texttt{ValueError} dersom \textit{absoluttverdien} til hastigheten er større en lyshastigheten.
+\end{itemize}
+ 
+Få med en forklarende feilmelding til alle testene.
+ 
+Filnavn: \texttt{momentum\_input.py}
+ 
+ 
+ 
+\section*{Oppgave 4.4 - Hvor stor friksjon?}
+\addcontentsline{toc}{section}{Oppgave 4.4 - Hvor stor friksjon? - \texttt{slide\_books\_friction.py}}
+Anta at du har et utvalg bøker plassert på en helning med vinkel $\theta$.
+ 
+For at en bok skal begynne å skli, må friksjonskraften $f$ være
+\[
+f = \mu_smg\cos\theta
+\]
+der $m$ er bokens masse i kg, $\mu_s$ den statiske friksjonskoeffisienten og $g = 9.81\,\mathrm{m/s^2}$. 
+Den statiske friksjonskoeffisienten kan variere ettersom hvilket materiale helningen er laget av. 
+ 
+Vi har fått et samling av data, \texttt{slide\_books.dat}, over bøkene. Filen inneholder informasjon on bøkenes ulike masse $m$, ulike vinkler $\theta$ og statiske friksjonskoeffsienter $\mu_s$. 
+ 
+\subsection*{a)}
+Lag et program som åpner \texttt{slide\_books.dat} og leser inn de ulike verdiene for $m$,$\theta$ og $\mu_s$. Programmet ditt skal skrives slik at den skal kunne lese inn et vilkårlig antall verdier for $m$, $\theta$ og $\mu_s$. 
+ 
+\subsection*{b)}
+Utvid programmet ditt fra a) og bruk de innleste verdiene til å beregne hvor stor friksjonen må være for at hver bok per helningsvinkel og friksjonskoeffisient skal begynne å skli. 
+ 
+Pass på at vinklene i \texttt{slide\_books.dat} er gitt i grader når programmet ditt regner ut friksjonskraften $f$! For å konvertere gradene til radianer, kan du bruke at 
+\[
+\text{vinkel i radianer} = \frac{\text{(vinkel i grader)} \cdot \pi}{180}
+\]
+ 
+Resultatene skal tilslutt skrives til fil. Formatet må være noe tilsvarende som dette eksempelet:
+\begin{verbatim}
+--- Book with mass 4.33 kg ---
+theta = 0.93 rad
+coefficient of friction = 0.34
+needed friction force is 8.69 N
+ 
+coefficient of friction = 0.2
+needed friction force is 5.11 N
+ 
+coefficient of friction = 0.55
+needed friction force is 14.06 N
+ 
+coefficient of friction = 0.4
+needed friction force is 10.23 N
+\end{verbatim}
+ 
+Filnavn: \texttt{slide\_books\_friction.py}
+ 
+\section*{Oppgave 4.5 - Newtons gravitasjons lov}
+\addcontentsline{toc}{section}{Oppgave 4.5 - Newtons gravitasjons lov - \texttt{newton\_gravitation\_file.py}}
+I oppgave 2.4 så vi på hvordan gravitasjonskraften mellom to legemer virker mellom seg ved å bruke Newtons gravitasjonslov:
+	\begin{equation*}
+	F = G\frac{m_1m_2}{r^2}
+	\end{equation*}
+der $m_1$ og $m_2$ er massene til legemene og $r$ er avstanden mellom dem.
+ 
+Konstanten $G$ er gravitasjonskonstanten som har verdi
+\[
+G = \SI{6.674e-11}{\cubic\meter\per\kilogram\per\squared\second}
+\]
+ 
+Vi skal se på hvor mye gravitasjonskraften virker mellom et legeme med masse $M$ kg og $N$ andre legemer. Det $i$-te legemet har masse $m_i$ kg og avstand $r_i$ fra legemet med masse $M$.
+ 
+Skriv et program som leser inn en fil og bruker verdiene i filen til å beregne og skrive ut den totale gravitasjonskraften som virker på legemet med masse $M$. 
+ 
+Du kan anta at filene som programmet ditt skal lese, har følgende struktur:
+\lstinputlisting[basicstyle = \small\ttfamily]{newton_objects.dat}
+Filen heter \texttt{newton\_objects.dat} som du kan finne her: (lenke til fil).
+ 
+Den $i$-te linjen består av informasjon om det $i$-te legemet. Den  første verdien er $m_i$ og andre verdien er $r_i$.
+ 
+Programmet skal ta inn massen $M$ som første argument og filnavnet bestående av informasjon om de $N$ legemene som andre argument på kommandolinjen.
+ 
+ Programmet skal så gjøre følgende i en  \texttt{try-except}-block:
+\begin{itemize}
+\item Skrive en passende feilmelding og avslutte programmet dersom brukeren glemmer å skrive massen $M$ eller filnavnet som argumenter på kommandolinjen.\\
+Med andre ord, skal feilmeldingen vises dersom det har oppstått en \texttt{IndexError}.
+\item Skrive en passende feilmelding og avslutte dersom brukeren skriver inn noe for massen $M$ som ikke kan konverteres til flyttall. Da har en \texttt{ValueError} oppstått. 
+\item  Skrive en passende feilmelding og avslytte dersom den gitte filen ikke eksisterer. Da vil det oppstå en \texttt{IOError}. 
+\end{itemize}
+ 
+La programmet ditt lese inn \texttt{newton\_objects.dat} og sett $M = 0.7\,$kg. 
+ 
+Filnavn: \texttt{newton\_gravitation\_file.py}
+\end{document}
+ 
+ 
+

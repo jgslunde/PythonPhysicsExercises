@@ -1,0 +1,194 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+\begin{document}
+ \tableofcontents
+ 
+	\section*{Oppgave 2.1 - Måle tid}
+	 \addcontentsline{toc}{section}{Oppgave 2.1 - Måle tid - \texttt{throw\_ball\_height.py}}
+	En ball slippes ned fra et stup i et rettlinjet bevegelse ved høyde $h$. Posisjonen til ballen etter en tid $t$ kan uttrykkes ved 
+	\[
+	y(t) = v_0t - \frac{1}{2}at^2 + h
+	\]
+	der $a$ er akselerasjonen i $\mathrm{m/s^2}$, $h$ er høyden (i meter) der ballen slippes fra og $v_0$ er startfarten (målt i m/s) .
+	
+	Vi ønsker å finne ut ved hvilken tid $t_1$ ballen passerer en spesifikk høyde $y_1$. Vi ønsker altså å finne verdien til $t_1$ slik at $y(t_1) = y_1$. Ballens posisjon blir målt per $\Delta t$ sekund. 
+	
+	Lag et program som finner ut hvor lang tid det tar ($t_1$) før ballen passerer høyden $y_1$. Programmet skal bruke en while loop. 
+	
+	Her lar vi $h = 10\, \si{\meter}$, $y_1 = 5\,\si{\meter}$, $\Delta t = 0.01\,\si{\second}$, $v_0 = 0\,\si{\meter.\per\second}$ og $a = 9.81\,\si{\meter.\per\square\second}$ .  
+	
+	\textbf{Hint:} Vi kan ikke bruke '\texttt{==}' i while loopen for å finne tiden $t_1$  når ballen er ved høyden $y_1$. Dette er fordi vi måler tiden pr. $\Delta t$ sekunder. Vi vil sannsynligvis måle posisjonen til ballen \textit{etter} den har nådd $y_1$. Det beste vi kan gjøre, er å øke tiden med $\Delta t$ så lenge høyden til ballen er \textit{større} enn $y_1$. Med en gang ballen har en høyde som er mindre eller lik $y_1$ ved en tid, så kan vi sette denne tiden til å være $t_1$. Programmet vårt vil derfor være noe unøyaktig, men dette er det beste vi kan få til siden vi ikke kan få uendelig liten $\Delta t$. 
+	
+	Filnavn: \texttt{throw\_ball\_height.py}
+ 
+ 
+\section*{Oppgave 2.2 - Relativistisk bevegelsesmengde}
+ \addcontentsline{toc}{section}{Oppgave 2.2 - Relativistisk bevegelsesmengde - \texttt{relativistic\_momentum.py}}
+Fra klassisk fysikk har vi at bevegelsesmengden $p$ til et objekt med masse $m$ og hastighet $v$ er gitt ved
+\begin{align*}
+p = m\cdot v
+\end{align*}
+En satellitt med masse $\SI{1200}{kg}$ er fanget i nærheten av et sort hull, og akselererer raskt fra $v = 0$ til $v = 0.9 c$, der $c$ er lyshastigheten i vakuum, som er $c\approx \SI{3e8}{\m.\per \s}$.
+ 
+\subsection*{a)}
+Skriv et program som printer to pene kolonner til terminalen: Satellittens hastighet i intervaller på $0.1 c$, og satellittens bevegelsesmengde ved disse hastighetene.
+ 
+\textbf{Hint:} Bruk vitenskapelig notasjon, '\%e', når du skriver verdiene, for å slippe ekstremt store floats. Eventuelt '\%g', som velger notasjon for deg. Prøv å ikke få med unødvendig mange desimaler i printen.
+ 
+ 
+\subsection*{b)}
+I oppgave 1.5 så vi at bevegelsesmengde i spesiell relativitetsteori er definert som
+\begin{align*}
+p_{rel} = m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+Dette er den faktiske bevegelsesmengden til et objekt, men vi skal nå se at den klassiske formelen er en veldig god tilnærming ved 'lave' hastigheter.
+ 
+Utvid programmet ditt fra oppgave a, slik at det printer tre kolonner: Hastigheten, den klassiske bevegelsesmengden, og den relativistiske bevegelsesmengden.
+ 
+Filnavn: \texttt{relativistic\_momentum.py}
+ 
+ 
+ 
+\section*{Oppgave 2.3 - Radioaktiv liste}
+  \addcontentsline{toc}{section}{Oppgave 2.3 - Radioaktiv liste - \texttt{radioactive\_list.py}}
+\subsection*{a)}
+Ta utgangspunkt i formelen for radioaktiv nedbrytning fra oppgave 1.2:
+\begin{align*}
+N(t) = N_0\exp{-t/\tau}
+\end{align*}
+
+Lag en while loop som fyller to lister: En med tidspunkter $t$, og en med verdier av $N(t)$ ved disse tidspunktene. Start i $t=0$ og bruk tidssteg på $\SI{60}{s}$. Loopen skal avbrytes når den gjenværende massen av stoffet er under 50\% av den opprinnelige. Vi ser fortsatt på en masse $N_0 = \SI{4.5}{kg}$ av karbon-11, med tidskonstant $\tau = \SI{1760}{s}$.
+ 
+Fra oppgave 1.3 husker vi at \textit{halveringstiden} til et materie er den tiden det tar for halvparten av materiet å nedbrytes. Fordi vi avbrøt loopen når halvparten av materiet var igjen, bør det siste elementet i tidslisten din være halveringstiden $\halflife$ til karbon-11.
+ 
+Sjekk at dette stemmer ved å sammenligne den siste $N$-verdien i listen din med halveringstiden som definert i oppgave 1.3. Husk at verdien du målte kan avvike på opptil et minutt, fordi vi brukte tidssteg på et minutt mellom hver måling.
+ 
+ 
+\subsection*{b)}
+Kombiner listene til en nøstet liste, \texttt{Nt}, slik at hvert element i listen \texttt{Nt} er et par av tilhørende $t$- og $N(t)$-verdier. For eksempel skal det første elementet \texttt{Nt[0]} være en liste av \texttt{[0,\ 4.5]}. Bruk den nye nøstede listen til å skrive ut et pent table av alle de tilhørende $t$ og $N(t)$ verdier til terminalen.
+ 
+Filnavn: \texttt{radioactive\_list.py}
+ 
+ 
+ 
+ 
+ 
+	\section*{Oppgave 2.4 - Newtons universelle gravitasjonslov}
+	  \addcontentsline{toc}{section}{Oppgave 2.4 - Newtons universelle gravitasjonslov - \texttt{newton\_gravitation.py}}
+	Newtons gravitasjonslov beskriver hvordan gravitasjonen som en tiltrekningskraft virker mellom to legemer:
+	\begin{equation*}
+		F = G\frac{m_1m_2}{r^2}
+	\end{equation*}
+	der $m_1$ og $m_2$ er massene til de to legemene som tiltrekker hverandre og $r$ er avstanden mellom dem. 
+	
+	Konstanten $G$ er gravitasjonskonstanten som har følgende verdi:
+	\[
+	G = \SI{6.674e-11}{\cubic\meter\per\kilogram\per\squared\second}
+	\]
+	
+	
+	Vi ser på et legeme med masse $M = 3$ kg som blir påvirket av $N$ legemer med masse $m_1,m_2,\dots,m_N$. Det $i$-te legeme har masse $m_i = \frac{i}{6}+2\,\mathrm{kg}$, og har avstand $r_i = \sqrt{\qty(\frac{i}{4})^2 + 10}$ meter fra legemet med masse $M$.  
+	
+	Antall legemer er $N = 10$.
+	
+	
+	Skriv et program som beregner den totale kraften $\sum_{i = 1}^N F_i = F_1 + F_2 + ... + F_N$ som virker på legemet med masse $M$. 
+	
+	Filnavn: \texttt{newton\_gravitation.py}
+	
+ 
+ 
+ 
+\section*{Oppgave 2.5 - Fanget kvantepartikkel}
+\addcontentsline{toc}{section}{Oppgave 2.5 - Fanget kvantepartikkel - \texttt{quantum\_trap.py}}
+Kvantemekanikk er et område i fysikken som omhandler virkeligheten på veldig små skalaer. En av resultatene i kvantemekanikk er at partikler noen ganger bare har lov til å ha spesifikke energinivåer, og kan aldri har energier mellom disse nivåene. Partiklene må da hoppe fra ett energinivå til et annet.
+ 
+Kvantemekanikk sier at en partikkel som er fanget i en veldig liten 'boks'\footnote{Et uendelig dypt kvadratisk potensial} av lengde $L$, har det bare lov til å ha energiene:
+\[	E_n = \frac{n^2h^2}{8mL^2}, \ \ \ \ n = 1,2,3\dots
+\]
+hvor $m$ er partikkelens masse, og $h$ er plancks konstant, \planck.
+ 
+Vi skal se på et elektron med masse $\SI{9.11e-31}{kg}$ som fanget i en boks av lengde $\SI{e-11}{m}$. Elektronet starter på det laveste energinivået, $E_1$ (IKKE $E_0$!), og hopper så oppover, ett energinivå om gangen. Hvert hopp fra et energinivå $E_i$ til $E_{i+1}$ vil kreve en energi
+\[  E_{i+1} - E_{i} = \frac{((i+1)^2-i^2)h^2}{8mL^2}
+\]
+ 
+Skriv en for loop som beregner energien er nødvendig for hver steg, og lagrer hver verdi i en liste. Summer også opp den totale energien som kreves gjennom alle hoppene.
+ 
+Filnavn: \texttt{quantum\_trap.py}
+ 
+ 
+ 
+\section*{Oppgave 2.6 - Loope over radiuser til looper}
+\addcontentsline{toc}{section}{Oppgave 2.6 - Loope over radiuser til looper - \texttt{for\_loop\_over\_loops.py}}
+For at en skal kunne kjøre gjennom en loop, er det nødvendig å ha en fart som er større enn en viss grense. 
+ 
+Anta en stuntperson skal kjøre gjennom en loop. For at stuntpersonen skal være i kontakt med loopen gjennom hele stuntet, må farten $v$ v\textit{minst} være:
+
+\[
+v = \sqrt{gr}
+\]
+Her er $g = 9.81\,\mathrm{m/s^2}$ og $r$ er radiusen til loopen (i meter). 
+ 
+ 
+Du har blitt gitt et program som bruker en while loop for å iterere gjennom en liste av radiuser $r$ til ulike looper. For hver radius $r$ programmet iterere gjennom blir den minste farten $v$ beregnet og deretter vist til skjerm:
+\lstinputlisting[style=py]{while_loop_over_loops.py}
+Programmet heter \texttt{while\_loop\_over\_loops.py} som du kan finne her: (lenke til program).
+ 
+Skriv om programmet slik at den bruker en for loop isteden. Endre også programmet slik at den ikke printer $v$ for hver radius i loopen, men heller printer verdiene i en egen for loop etter alle $v$ har blitt regnet ut. 
+ 
+Filnavn: \texttt{for\_loop\_over\_loops.py}
+ 
+\end{document}
+ 
+ 
+

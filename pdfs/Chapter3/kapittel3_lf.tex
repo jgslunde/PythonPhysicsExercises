@@ -1,0 +1,119 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage[margin=1.5cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+
+\begin{document}
+
+\section*{Oppgave 3.1}
+Alle tre variablene skal sendes inn til funksjonen, ingenting skal være globalt. Heltallsdivisjon kan skje i \texttt{-t/tau}.
+
+Test funksjonen bør helst inneholde en \texttt{assert} statement, og som nevnt i oppgaven kan ikke toleransen være mindre enn \texttt{1e-4} fordi \SI{3.2}{kg} er en (ganske nøyaktig) tilnærming.
+\lstinputlisting[style=py]{radioactive_function.py}
+
+
+
+\section*{Oppgave 3.2}
+Her skal altså to \texttt{n}'er, \texttt{L} og \texttt{m} tas inn som variabler, og det skal regnes ut differansen mellom to energinivåer. 
+\lstinputlisting[style=py]{quantum_function.py}
+
+
+
+\section*{Oppgave 3.3}
+Fokuset i oppgaven er at de får til å iterere gjennom den innsendte listen av friksjonskoeffsienter, utføre beregninger på dem og lagre resultatene i en liste. 
+
+Det er ikke så viktig at \texttt{zip} brukes, men fint om de får vite at den finnes og hint til hvordan den kan brukes i denne oppgaven. 
+\lstinputlisting[style=py]{block_frictions.py}
+\newpage
+Resultat etter kjøring av løsningsforslaget:
+\begin{verbatim}
+>>> Length: 2.05518 with frictioncoefficient: 0.62 
+>>> Length: 4.24737 with frictioncoefficient: 0.3 
+>>> Length: 2.83158 with frictioncoefficient: 0.45 
+>>> Length: 6.37105 with frictioncoefficient: 0.2
+\end{verbatim}
+
+
+
+\section*{Oppgave 3.4}
+Her er det viktig at de får til å lage en if-test i en funksjon (til å beregne poengene) uten å bruke globale variable. 
+ \lstinputlisting[style=py]{hit_target.py}
+ Resultat etter kjøring av løsningsforslaget:
+ \begin{verbatim}
+>>> Number of points using v0 = 15: 0
+>>> Number of points using v0 = 16: 1
+>>> Number of points using v0 = 19: 1
+>>> Number of points using v0 = 22: 2
+ \end{verbatim}
+ Noen delresultater som kan være til nytte:
+ \begin{itemize}
+ 	\item Når $v_0 = 15$, så er $y = 2.9659$
+ 	\item Når $v_0 = 16$, så er $y = 3.03057617187$
+ 	\item Når $v_0 = 19$, så er $y = 3.16711218837$
+ 	\item Når $v_0 = 22$, så er $y = 3.25170971074$
+ \end{itemize}
+
+
+\newpage
+\section*{Oppgave 3.5}
+Poenget med denne oppgaven er å lage to funksjoner som i utgangspunktet skal returnere samme verdi, men fra ulike parametere. Testfunksjonen skal benytte ligningen i oppgaven til å konvertere en gitt tid til posisjon, slik at de to funksjonene kan sammenlignes.
+
+I oppgave c) er det best å sjekke typen til \texttt{t} i en if/else block, og løse problemet helt separat.
+\lstinputlisting[style=py]{cliff_throw.py}
+
+
+\newpage
+\section*{Oppgave 3.6}
+Denne er nok i det tøffere laget fordi det er mye å holde styr på. Her er det meningen at de skal vise hva som er viktig å skille mellom ved for- og while loop, og ved hvilke tilfeller de skal brukes til. Tenker at de viser veldig god beherskelse på pensumet fram til nå om de får til b). 
+\lstinputlisting[style=py]{block_frictions2.py}
+Delresultat som kan være til nytte:\\
+Listen \texttt{lengths} har verdiene\texttt{[2.0551774003489998, 4.2473666285, 2.8315777446474995, 6.371049942749998]}
+\end{document}
+
+

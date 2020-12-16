@@ -1,0 +1,183 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+ 
+\begin{document}
+	\section*{Oppgave 1.1 - Massetetthet}
+	\addcontentsline{toc}{section}{Oppgave 1.1 - Massetetthet - \texttt{massdensity.py}}
+	Ulike materiale har ulike massetettheter. Massetettheten er definert masse delt på volum, oftest i $\mathrm{kg}/\mathrm{m^3}$.   
+	\begin{center}
+	\begin{tabular}{l | l  l  l  l l}
+			Materialer& Polystyren (lav tetthet) & Kork & Rhenium & Platinium \\ \hline 
+			Massetetthet (i \si{\kg.\per\cubic\meter}) &20 & 220  & 21020 & 21450
+	\end{tabular} 
+	\captionof{table}{Massetettheten til ulike materialer}
+	\end{center}
+	En kube veier \SI{858}{g} og har volum \SI{40}{cm^3}. Skriv et program som finner massetettheten til kuben og bruk resultatet til å finne hvilket materiale kuben består av. 
+	Kuben består av et av materialene i tabellen over. Det kan hende at svaret ditt vil ikke være den eksakt en av de gitte massetetthetene siden massetetthet er i seg selv et gjennomsnittlig mål. Du kan velge materialet som har massetett som er nærmest ditt resultat. 
+	
+	Filnavn: \texttt{massdensity.py} 
+	\section*{Oppgave 1.2 - Beregne solmassen}
+	\addcontentsline{toc}{section}{Oppgave 1.2 - Beregne solmassen - \texttt{solarmass.py}}
+	Det er mulig å regne ut solens masse ved å bruke at 
+	\begin{equation}\label{eq:solarmass}
+	M_{sol} = \frac{4\pi^2 \cdot\qty(\SI{1}{AU})^3}{G \cdot \qty(\SI{1}{yr})^2}
+	\end{equation}
+	I denne oppgaven kommer vi til å bruke omtrentlige verdier for AU og G. \\
+	Enheten AU er en astronomisk lengdeenhet gitt ved avstanden mellom solen og jorden. Den har en verdi
+	\[
+	\SI{1}{AU} = \SI{1.58e-5 }{\text{lysår}}
+	\]
+	der
+	$
+	\SI{1}{lysår} = \SI{9.5e12}{\km} 
+	$.
+	
+	Konstanten G kalles gravitasjonskonstanten og har verdi 
+	\[
+	G = \SI{6.674e-11}{\cubic\meter\per\kg\per\second} 
+	\]
+ 
+	Lag et program som regner ut solmassen ved å bruke \vref{eq:solarmass} og som skriver ut resultatet i kilogram med en pent formatert \texttt{print}.  Resultatet ditt skal bli omtrent $M_{sol} \approx 2.01 \cdot 10^{30}\,$kg. 
+	
+	
+	Filnavn: \texttt{solarmass.py}
+	
+ 
+ 
+\section*{Oppgave 1.3 - Halveringstid}
+\addcontentsline{toc}{section}{Oppgave 1.3 - Halveringstid - \texttt{half\_life.py}}
+Et radioaktivt materie er et ustabilt stoff som over tid vil reduseres til andre materier mens det avgir radioaktiv stråling. Av en opprinnelig masse $N_0$ av et radioaktivt materie, vil den gjenværende massen etter en tid $t$ være gitt ved
+\begin{align}
+N(t) = N_0\exp{-t/\tau}
+\end{align}
+$\tau$ er den såkalte 'tidskonstanten' til det radioaktive materiet, og representerer den gjennomsnittlige tiden et enkelt atom bruker før det nedbrytes. Den kan variere fra under $\SI{e-20}{s}$ for ekstremt ustabile isotoper, til over $\SI{e30}{s}$ for stoffer som for alle praktiske formål kan regnes som stabile.
+ 
+ 
+\subsection*{a)}
+Karbon-11 er et ustabilt karbonisotop, og har en tidskonstant $\tau = 1760\; \mathrm{s}$.
+ 
+Lag et program som beregner hvor mye som gjenstår av karbonet etter 10 minutter. Anta at vi starter med en mengde $N_0 = \SI{4.5}{kg}$ av karbon-11.
+ 
+\textbf{Hint:} For å teste at programmet ditt fungerer som det skal, kan du sette $t$ lik $0$, og et meget stort tall, og sjekke at resultatene virker i overensstemmelse med slik du forventer et radioaktiv materiale å oppføre seg.
+ 
+ 
+\subsection*{b)}
+Selv om tidskonstanten gir oss en veldig pen formel, snakker vi oftere om 'halveringstiden' $\halflife$ til materiet, som er tiden det tar for halvparten av materiet å nedbrytes. Forholdet mellom tidskonstanten og halveringstiden er gitt ved
+\begin{align*}
+\tau = \frac{\halflife}{\ln 2}
+\end{align*}
+ 
+Halveringstiden til karbon-11 er $\halflife = 1220\;\mathrm{s}$. Skriv om programmet ditt slik at det først regner ut tidskonstanten fra halveringstiden, og deretter beregner mengden av stoffet, som i forrige oppgave. \\
+Kontroller at du får samme svar som i forrige oppgave dersom du bruker samme masse og tid.
+ 
+Filnavn: \texttt{half\_life.py}
+ 
+ 
+ 
+	\section*{Oppgave 1.4 - Farten til et atom}
+	\addcontentsline{toc}{section}{Oppgave 1.4 - Farten til et atom - \texttt{velocity\_of\_atom.py}}
+	Atomene i et materiale er strukturert slik at de danner et repeterende gitter mønster av deres plasseringer. 
+	Vi skal se på et atom som beveger seg langs overflaten til materialet. På grunn av gitterstrukturen, kan vi lage en modell der farten til atomet er periodisk:
+	\begin{equation*}
+		v(x) = \sqrt{v_0^2 + \frac{2F_0}{m}\qty(\cos\qty(\frac{x}{n}) -1 )}
+	\end{equation*}
+	der $m$ er atomets masse, $x$ er posisjonen til atomet, $v_0$ er atomets startfart og $n$ er en skalert avstand mellom atomene i materialet. Vi setter kraften $F_0 = 1$.\\
+	Finn farten til atomet når $x = 1$, $v_0 = 2$, $n = 4$ og $m = 3$.
+	
+	Filnavn: \texttt{velocity\_of\_atom.py}
+ 
+\section*{Oppgave 1.5 - Finn feil hos Einstein}
+	\addcontentsline{toc}{section}{Oppgave 1.5 - Finn feil hos Einstein -  \texttt{Einsteins\_errors.py}}
+Spesiell relativitetsteori er et område i fysikken som omhandler veldig store hastigheter. I spesiell relativitetsteori er bevegelsesmengden $p$ til et objekt med masse $m$ (i kg) og hastighet $v$ (i m/s) gitt ved
+\begin{align*}
+p = m\cdot v\cdot \gamma, \ \ \ \ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+\end{align*}
+der $c\approx \SI{300000000}{m/s}$ er lyshastigheten. Programmet under forsøker å regne ut bevegelsesmengden til et objekt med en hastighet på $1/3$ av lyshastigheten, med masse $m=0.14\;\mathrm{kg}$. Programmet er fullt av feil. Kopier programmet og kjør det. Rett opp feilene, og få programmet til å printe en korrekt $p$.
+\\
+\lstinputlisting[language=Python, frame=single, numbers=left, showstringspaces=false]{find_Einsteins_errors.py}
+ 
+Filnavn: \texttt{Einsteins\_errors.py}
+ 
+\section*{Oppgave 1.6 - Rydbergs konstant}
+\addcontentsline{toc}{section}{Oppgave 1.6 - Rydbergs konstant- \texttt{constant\_Rydberg.py}}
+
+Rydbergkonstanten $R_{\infty}$ for tunge atomer brukes i fysikken for å kunne beregne bølgelengden til spektrallinjer\footnote{Årsaken til at vi bruker $\infty$ i symbolet til konstanten er fordi vi antar at massen til atomets kjerne er uendelig stor sammenlignet med massen til elektronet.  }. 
+ 
+Konstanten er funnet til å være
+\[
+R_{\infty} = \frac{m_ee^4}{8 \varepsilon_0^2h^3c }
+\]
+der 
+\begin{itemize}
+	\item $m_e = \SI{9.109e-31}{\meter}$ er massen til elektronet 
+	\item $e = \SI{1.602e-19}{C}$ er ladningen til et proton (også kalt for \textit{elementærladningen})
+	\item $\varepsilon_0 = \SI{8.854e-12}{C.V^{-1}.\meter^{-1}}$ er den elektriske konstanten
+	\item $h = \SI{6.626e-34}{J.s}$ er Plancks konstant
+	\item $c = \SI{3e8}{\meter.\per\second}$ er lysets fart
+\end{itemize}
+Dette er fysiske konstanter som brukes en god del i fysikk, og som du høyst sannsynlig kommer til å møte på flere ganger i andre fysikkemner!
+ 
+Lag et program som setter de fysiske konstantene som variabler og bruker variablene til å regne ut verdien til Rydbergs konstant. Verdien til Rydbergskonstant skal da skrives til skjerm ved hjelp av \texttt{print}. 
+ 
+Se om programmet ditt gir at
+\[
+R_{\infty} = 10961656.2162\quad (\text{i }\mathrm{m^{-1}})
+\]
+Merk at dette er kun en omtrentlig verdi. Dette er fordi vi har rundet av verdiene de fysiske konstantene til tre desimaler. 
+ 
+Filnavn: \texttt{constant\_Rydberg.py}
+
+\end{document}
+ 
+ 
+

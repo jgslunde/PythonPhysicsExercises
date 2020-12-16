@@ -1,0 +1,190 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+\begin{document}
+
+\section*{Exercise 7.1 - Planet class}
+\addcontentsline{toc}{section}{Exercise 7.1 - Planet class - \texttt{Planet.py}}
+
+\subsection*{a)}
+Write a class \texttt{Planet}, with a contructor which takes in the planet's \textit{name}, \textit{radius}, and \textit{mass}, and saves them. Include also a method \texttt{density}, which returns the density of the planet in $\mathrm{kg/m^3}$, and a method \texttt{print\_info}, which writes all known information about the planet to the terminal, including it's density. (call the \texttt{density} method from inside \texttt{print\_info} method)
+
+\subsection*{b)}
+Create an instance of the class called \texttt{planet1}, representing Earth. Add a new attribute to this instance called \texttt{population}, with a value \texttt{7497486172}.
+
+Add the following line to your program, and ensure that you get the print stated below:
+
+\texttt{print planet1.name, " has a population of ", planet1.population}
+\begin{lstlisting}
+>>> Earth has a population of 7497486172
+\end{lstlisting}
+
+Filename: \texttt{Planet.py}
+
+
+
+\section*{Exercise 7.2 - Coulomb's law}
+\addcontentsline{toc}{section}{Exercise 7.2 - Coulomb's law - \texttt{Particle\_Coulomb.py}}
+
+Coulomb's law describes the force which interacts between two charged point masses \footnote{A point mass is a very small objects which is so small that it does not occupy any space, but is still present. Small bodies, such as elementary particles is usually thought as point masses. Coulumb's law can also be applied to larger, sphere-shaped objects.}.
+
+We will now make a simple model to find the force interacting between the two charged particles. 
+
+Coulomb's law states that:
+\[
+F = k_e\frac{q_1q_2}{r^2}
+\]
+where $k_e = \SI{8.988e9}{\newton\square\meter.\per\square\coulomb}$, $q_1$ is the charge of one particles, $q_2$ is the charge of the other particle and $r$ is the distance between the particles. 
+\subsection*{a)}
+Define a class which takes in the position of the particle (as an array consisting of the x- and y- coordinate of the particle's position) and charge $q$ of the particle as parameters to the constructor. 
+
+The class must also have a function which takes in another particle as parameter, and calculates the force which interacts between the particles using Coulomb's law. The absolute value of the found force should then be returned. 
+
+\textbf{Hint:} To calculate the distance $r$ between the particles, one can use \texttt{np.linalg.norm}. 
+\subsection*{b)}
+Define a test function \textit{outside} the class definition to test if your implementation of Coulomb's law gives you desired results. Let your program call on the test function. 
+
+A test your program should perform, is to create two particles whereas  the particles has distance $30 \,\si{\milli\meter}$ between them. Let the charge of one particle be $-1.602\cdot10^{-19}\,\si{\coulomb}$ and the charge of the other particle be $1.602\cdot10^{-19}\,\si{\coulomb}$ . 
+
+Your program should calculate that the force between the particles is:
+\[
+F = \SI{2.565833688e-15}{N}
+\]
+
+Filename: \texttt{Particle\_Coulomb.py}
+
+
+
+\section*{Exercise 7.3 - Unidentified flying object}
+\addcontentsline{toc}{section}{Exercise 7.3 - Unidentified flying object - \texttt{UFO.py}}
+
+\subsection*{a)}
+You shall write a class, \texttt{ObjectMovement}, which calculates the movement of an object which flies freely through the air. We ignore air resistance, and do our calculations in two dimensions - one horizontal axis $x$, and one vertical axis $y$.
+
+Begin the class with a constructor, for saving the object's initial position \texttt{(x0, y0)} and initial velocity \texttt{(vx0, vy0)}. Include also the acceleration of gravity, $a = \SI{-9.81}{m/s^2}$, preferably as a key-word variable.
+
+Give the class two methods \texttt{position} and \texttt{velocity}, which takes in a timepoint $t$, and returns the objects position or velocity at that time. You may use the following equations of movement:
+\begin{align*}
+s(t) = s_0 + v_0t + \half at^2, \ \ \ \ v(t) = v_0 + at
+\end{align*}
+Remember that you can decompose the equations in $x$ and $y$ direction and calculate them individually. Gravity's acceleration is then only in the $y$ direction.
+
+Write also a test-function, \texttt{test\_pos\_vel}, which tests that the position and velocity given form the \texttt{position} and \texttt{velocity} methods matches exact values from a calculator within a tolerance.
+
+
+\subsection*{b)}
+Because the only force acting on the object is gravity, which is a conservative force, the sum of \textit{kinetic} and \textit{potential} energy should be conserved (equal at any two points in time). Kinetic energy is given as $E_k = \half m v^2$, and potential energy (on the surface of the Earth) $E_p = mgy, \ \ g=\SI{9.81}{m/s^2}$.
+
+Remember that $v = \sqrt{v_x^2 + v_y^2}$.
+
+Write a function \texttt{test\_energy\_conservation}, which calculates $E_k$ and $E_p$ at two chosen timepoints, and confirms that they are equal within a tolerance. Set $m=\SI{1}{kg}$.
+
+Filename: \texttt{UFO.py}
+
+
+
+\section*{Exercise 7.4 - Runners at different inclined slopes}
+\addcontentsline{toc}{section}{Exercise 7.4 - Runners at different inclined slopes - \texttt{Runner.py}}
+We will now define a class which can be used to represent a runner which runs down different hills with different angles of inclination.
+
+\subsection*{a)}
+The runners has mass $m\,$kg and an initial velocity of $v_0\,$m/s. 
+
+Define the class which represents a runner and make an instance of the class with mass $m = 30\,$kg, initial velocity $v_0 = 5\,$m/s and $\theta = \ang{30}$.  The mass $m$, initial velocity $v_0$ and the inclination angle $\theta$ must be given as parameters to the constructor. 
+
+\subsection*{b)}
+Extend your class from a) such that it contains a function \texttt{\_\_str\_\_} (this function is called automatically when we try to print the instance). \\
+The function will return a string which contains information about the mass $m$ of the runner, initial velocity $v_0$ and the inclination angle on the hill which the runner sprints at. Make sure that the returned string clearly states what each value represents. 
+
+If we try to print the instance from a), it should get something like
+\begin{verbatim}
+Sprinter with 
+mass: 80 kg 
+initial velocity: 5 m/s
+angle: 30 degrees
+\end{verbatim} 
+
+\subsection*{c)}
+Extends the class such that it contains a function which calculates how much time the runner will use to run $d$ meters down the hill. \\
+We will make a simple assumption that the driving force of the runner (the force which makes the runner run) is $F_{\text{d}} = 400\,\si{\newton}$. \\
+Extend your class with a function which takes the value of $d$ as parameter. The time used by the runner to sprint $d$ meters can be shown to be
+\[
+T = -\frac{v_0}{g\sin\theta + \frac{1}{m}400} + \frac{\sqrt{v_0^2 + 2d\qty(g\sin\theta + \frac{1}{m}400) }}{g\sin\theta + \frac{1}{m}400}
+\]
+Use your newly defined function to write out how much time the runner from a) will use.
+
+Filename: \texttt{Runner.py}
+
+
+\section*{Exercise 7.5 - Center of mass}
+\addcontentsline{toc}{section}{Exercise 7.5 - Center of mass - \texttt{center\_of\_mass.py}}
+When we are working with several objects, it is often convenient to work with the \textit{center of mass} of the objects. The center of mass is a position which is often used as a reference point. 
+
+For $N$ objects where $j$-th object has mass $m_j$ and position $\vec{r}_j$, the center of mass is defined to be:
+\begin{align*}
+\vec{R} &= \frac{m_1\vec{r}_1 + m_2\vec{r}_2 + \dots + m_N\vec{r}_N }{m_1 + m_2 + \dots + m_N} 
+\end{align*}
+
+In this task we will represent the object's position by using arrays with length 2. The first element in the array will represent the x- coordinate of the object, and the second element will represent the y-coordinate of the object. 
+
+We will now look at the center of mass between a selection of particles.
+\subsection*{a)}
+Define a particle class which takes the position of the particle and the mass of the particle as parameters to the constructor. 
+\subsection*{b)}
+Initialize five instances of particles where $j$-th particle has position $r_j = \qty(j,2\cdot j)$ and mass $m_j = j\cdot 10^{-30}\,$kg. 
+
+\textbf{Hint: } One way one could initialize the instances, is by creating them through a for loop and store them in a list. 
+\subsection*{c)}
+Let your program find the center of mass between the five particles which you initialized in b). 
+
+Filename: \texttt{center\_of\_mass.py}
+
+\end{document}

@@ -1,0 +1,120 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage[margin=1.5cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+
+\begin{document}
+\section*{Oppgave 4.1}
+Viktige punkter er å bruke en try-except-blokk og la programmet kjøre en egendefinert testfunksjon.
+\lstinputlisting[style = py]{uncertainty_Heisenberg.py}
+Delresultater som kan være til nytte:
+\begin{itemize}
+	\item $\dfrac{h}{4\pi} = 5.27280326463\cdot 10^{-35}$
+	\item $\Delta x_1\cdot\Delta p_1 = 5.272805\cdot 10^{-35}$
+	\item $\Delta x_2 \cdot \Delta p_2 = 5.2 \cdot 10^{-35}$
+\end{itemize}
+
+
+
+
+\newpage
+\section*{Oppgave 4.2}
+I denne oppgaven skal det settes opp et input system, som først ser etter verdier i terminalen, og spør etter dem fra brukeren hvis verdiene ikke finnes eller er ugyldige. Disse verdiene brukes så til å regne ut et par enkle funksjoner.
+
+Det er ikke nødvendig å implementere $x(t)$ og $v(t)$ som funksjoner, men det er veldig anbefalt.
+
+I oppgave b) bør det være en \texttt{try} statement for å initialisere alle variablene, og to \texttt{except} statements for de to mulige feilene som kan oppstå ved denne initialiseringen. Begge spør brukeren om å sette inn verdiene manuelt.
+
+\lstinputlisting[style = py]{particle_accelerator.py}
+
+\begin{verbatim}
+>>> Electron has a position of 1321.98 m and a velocity of -43.74 m/s at time 15.00 seconds.
+>>> Particle has a position of 3300.00 m and a velocity of 220.00 m/s at time 15.00 seconds.
+>>> Particle has a position of 3301.08 m and a velocity of 220.14 m/s at time 15.00 seconds.
+\end{verbatim}
+
+
+
+
+
+\newpage
+\section*{Oppgave 4.3}
+Hva som er tilstrekkelig nøyaktig er selvsagt åpent for diskusjon, og ingenting er direkte feil, men en grense ett sted mellom $0.1c$ og $0.5c$ er å foretrekke.
+
+Vi har her valgt å sette $\gamma = 1$ ved det klassiske tilfellet, og bruke samme formel, men det også helt greit å regne de to formlene direkte i if/else-blokken.
+
+De bør helst vende seg til å bruke \texttt{raw\_input}, og konvertere til float, istedenfor å bruke \texttt{input}.
+
+I oppgave b) er det bare å bytte input med terminal argumenter.
+
+I oppgave c) skal de wrappe initialiseringen av variabler i en \texttt{try/except} block. Denne bør inneholde hånteringer av både \texttt{IndexError} og \texttt{ValueError}. I tillegg skal det være to \texttt{if/else} tester for å sjekke massen og hastigheten, som skal raise sine egne errors. Alle errors skal ha med forklarende tekst.
+
+\lstinputlisting[style = py]{momentum_input.py}
+
+
+\newpage
+\section*{Oppgave 4.4}
+\subsection*{a)}
+Her er det viktig at de skriver et program som kan lese inn \textit{vilkårlig} antall verdier for massene, helningsvinkelene og friksjonskoeffisientene. 
+Dersom noen glemmer å lukke filene, kan det være flott å si ifra om dette er viktig for å unngå feil i programmet.
+
+\subsection*{b)}
+Det er fint om de greier å skrive til fil hva hver verdi står for. 
+\lstinputlisting[style = py]{slide_books_friction.py}
+\newpage
+\section*{Oppgave 4.5}
+Det som er nytt her, er \texttt{IOError}, men ellers er alt ganske likt som i boka. Det er også viktig å passe på å lukke fila. 
+\lstinputlisting[style = py]{newton_gravitation_file.py}
+Resultat:
+\begin{verbatim}
+>>> Total force on object with mass 0.7 kg is 5.85559 N
+\end{verbatim}
+\end{document}
+
+

@@ -1,0 +1,239 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+\begin{document}
+
+
+
+
+
+
+\section*{Exercise 8.1 - Conservation of energy}
+\addcontentsline{toc}{section}{Exercise 8.1 - Conservation of energy - \texttt{check\_energy\_conservation.py}}
+In this exercise we will use a random number generator to confirm a physical phenomena. This phenomena is called \textit{conservation of energy}. Conservation of energy is an important phenomena which we often use to solve and describe physical systems.
+
+The total energy $E$ of a body can be divided into two groups: the kinetic energy $E_k$ and potential energy $E_p$. There exists also some other different types of energies, but we will only focus on the kinetic energy and the potential energy.  
+
+The total energy $E$ of the body can be written as $E = E_k + E_p$. 
+By having conservation of energy means that for \textit{any time} $t$ we measure the total energy of the body we will always get the same result. 
+
+We can write this as
+\begin{align*}
+E_0 &= E_1 \\
+E_{k,0} + E_{p,0} &= E_{k,1} + E_{p,1}
+\end{align*}
+where $E_0$ and $E_1$ are the total energies measured at the different times $t_0$ and $t_1$. 
+
+The kinetic and potential energy of a body which is only affected by gravity is
+\begin{align*}
+E_k &= \frac{1}{2}mv(t)^2 \\
+E_p &= mgy(t)
+\end{align*}
+
+Assume that we have a ball which is being thrown straight up. The height $y(t)$ at a certain time $t$ can by found by using
+\begin{align*}
+y(t) &= -gt^2 + v_0t \\
+v(t) &= -gt + v_0
+\end{align*}
+where $g = 9.81\,\mathrm{m/s^2}$ and $v_0\,$m/s is the velocity the ball is thrown with.
+
+Define a test function which takes $N$, $m$ and $v_0$ as parameters and tests if we have conservation of energy. 
+
+Let the function generate $N$ random values for the time $t_0$ and $t_1$. The values have to be between 0 and $\frac{v_0}{g}$. \\
+For every value of $t_0$, the program have to calculate $E_0$. The same should be done for every value of $t_1$, that is calculate the total energy $E_1$. 
+
+Test if the total energies $E_0$ and $E_1$ are almost equal. Use \texttt{assert} and write a descriptive message if it happens that your program do not have conservation of energy. 
+
+Let  $N = 100$, $m = 0.057\,$kg and $v_0 = 17\,$m/s and call the test function using these parameters. 
+
+\textbf{Hint:} A lot of this code can be vectorized - take a look at the end of page 510 in the book for how tests could be vectorized. 
+
+Filename: \texttt{check\_energy\_conservation.py}
+
+
+
+
+
+
+\section*{Exercise 8.2 - Randomized Decay}
+\addcontentsline{toc}{section}{Exercise 8.2 - Randomized Decay - \texttt{random\_decay.py}}
+
+We have previously studied how a mass of a radioactive material decays over time, using a purely analytical formula:
+\begin{align}
+N(t) = N_0 \exp{-t/\tau} \label{eqn:8.2}
+\end{align}
+With our knowledge of random numbers, we can now take a more numerical approach, modelling each atom in the material individually.
+
+Each atom in a radioactive material has a chance $p$ of decaying each second. We will model the material as an array, with each element in the array representing an atom. The elements can have values either $1$, representing that the atom has not yet decayed, or $0$, representing that the atom has decayed.
+
+We will be looking at the nitrogen isotope \textit{nitrogen-16}, where every atom has a chance $p = 0.0926$ (or 9.26\%) of decaying each second.
+
+\subsection*{a)}
+We will first study a single second of decay. Create an array of $40$ atoms. Loop over each atom, and decide if it decays or not. You can do this by generating a random number in the interval $[0,\ 1]$, and compare it to $p$. Remember to generate a new number for each atom, or they will all end up either decaying or not at the same time.
+
+Print the new array of atoms and confirm that a few of the atoms actually decayed.
+
+
+\subsection*{b)}
+Repeat the process for 30 seconds by wrapping your code in another for loop.
+
+Implement also another array that keeps track of how many atoms remains over time. You can do this by using the \texttt{numpy.sum()} function on the array of atoms after each time-step\footnote{The sum function sums up the values of the elements, so a non-decayed atom will count as 1, and a decayed atom will count as 0.}. Make sure that both the original amount of atoms before the first decay, and the last number of atoms after the last decay are included.
+
+\subsection*{c)}
+Plot the remaining atoms as a function of time. Put also the analytical solution to the decay in the same plot, given by \ref{eqn:8.2}.
+
+where $N_0$ is the initial amount of atoms. $\tau = \SI{10.3}{s}$, and is directly derived from $p$.
+
+Try to increasing the number of atoms, and (hopefully) watch your approximation become more and more like the analytical solution.
+
+Filename: \texttt{random\_decay.py}
+
+
+
+\section*{Exercise 8.3 - Optimal shooting angles}
+\addcontentsline{toc}{section}{Exercise 8.3 - Optimal shooting angles - \texttt{optimal\_angles\_shoot.py}}
+You have made a small ball-canon which is supposed to hit a painted area on a wall (if you have done exercise 3.4, then you are free to use and modify your program from that exercise here). The painted area begins at a height $h_0$ and ends at a height $h_1$ at the wall. 
+
+The height of the ball can be expressed by: 
+\begin{align*}
+y(t) =  -\frac{1}{2}g t^2 + v_0t\sin\theta
+\end{align*}
+where $g = 9.81\,\mathrm{m/s^2}$, $v_0\,$m/s is the velocity and $\theta$ is the angle the ball has been shoot out with. 
+
+The ball hits the wall at a time $T = \dfrac{b }{v_0\cos\theta}$ where $b$ is the distance (in meter) between the cannon and the wall. 
+
+\subsection*{a)}
+Write a program which generates $N$ values of $\theta$ by using Python's  \texttt{uniform(0,$\pi$)} or  Numpy's \texttt{uniform(0,$\pi$,$N$)}.
+The values for $\theta$ shall be given as a parameter to a function which tests if the canon hits the painted area for every value of $\theta$. 
+The $\theta$-s which makes the ball hit the painted area should then be stored in a list or array. The list or array has to be returned by the function. 
+
+Let $N = 1000$, $h_0 = 3\,$m, $h1 = 3.25\,$m, $b = 3.5\,$m og $v_0 = 25\,$m/s and run the program for these parameters.
+\subsection*{b)}
+Use the list og array which was returned by the function in a) to find the mean value  $\theta'$ of the angles which made the ball hit the painted area. If the list is empty, let the program generate $N$ new values for $\theta$ until the returned list or array is not empty. This could for instance be done by making a while loop which will run as long as the list is empty. 
+
+Let your program do the same as in a), but instead using a different function to generate the values of $\theta$. Now use Python's  \texttt{random.gauss($\theta'$,0.05)} or  Numpy's \texttt{np.random.uniform($\theta'$,0.05,$N$)}.
+
+Let your program print out how many angles from a) and from this subtask made the ball hit the painted area. How is the number of angles in this subtask compared to the number of angles you found in a)?
+
+\textbf{Comments to the result in b):} The values of $\theta$ in a) were generated such that every value between 0 and $\pi$ were equally probable to pick. However, in b) we generated the values using a \textit{normal distribution} centered about $\theta'$.
+A normal distribution tells us how likely it is for us to get values in a area about $\theta'$. 
+
+The value $\theta'$ will be the most likely value to get, whereas the probability of getting other values will decrease the greater the difference between the other values and $\theta'$ is. The rate of the decrease is dependent on an additional value, called the standard deviation, which is in our case 0.05 (found after some experimenting). 
+
+The larger the standard deviation is, the more probable the other values gets. Smaller the standard deviation makes the other values less probable.  
+
+Filename: \texttt{optimal\_angles\_shoot.py}
+
+
+
+
+
+\section*{Exercise 8.4 - Hot gas}
+\addcontentsline{toc}{section}{Exercise 8.4 - Hot gas - \texttt{gaussian\_velocities.py}}
+
+In this exercise we will study the velocity of particles in a hot gas. Temperature is just random movement of particles. If the gas isn't moving, the combined velocity of all particles is virtually 0, but they still move internally, relative to each other.
+
+The particles in a gas of absolute temperature $T$ have velocities that are normally (Gaussian) distributed around a mean 0, with a standard deviation\footnote{The standard deviation represents the width of the distribution curve, and a higher standard diviation results in higher velocities, and a higher temperature.} $s = \sqrt{\frac{kT}{m}}$, where $k = \SI{1.38e-23}{m^2.kg.s^{-2}.K^{-1}}$ is Boltzmann's constant. This distribution is true for their velocities along each axis, $(v_x,v_y,v_z)$, individually.
+
+We can get normally distributed numbers with the numpy function \texttt{numpy.normal(m,s,shape)}, where \texttt{shape} is the shape of the array of random numbers that will be returned. To represent \texttt{N} particles with normally distributed velocities along each axis, we will create an array with \texttt{shape = (N,3)}. This makes each element in our array represent a particle, which is itself an array of size 3, representing the velocities along each axis.
+
+
+\subsection*{a)}
+Set $N = 20$, $m = \SI{e-22}{kg}$, $T = \SI{300}{K}$, and save the normally distributed particles from the numpy function in an array.\\
+Use the \texttt{random.choice()} function to pick a random of the 20 particles from the array, and print it's velocities to the terminal.
+
+
+\subsection*{b)}
+The average kinetic energy of the particles in the gas of temperature $T$ is given as
+\[	E_k = \frac{3}{2}kT
+\]
+If we multiply this by the number of particles, $N$, we get the total kinetic energy of the gas.
+
+An alternative method for calculating the kinetic energy is  to sum up the individual energies of the particles in the gas using the formula
+\[	E_k = \frac{1}{2}mv^2
+\]
+Loop over every particle, and calculate their kinetic energy by inserting their absolute velocity, $|v| = \sqrt{v_x^2 + v_y^2 + v_z^2}$, into the second formula. Compare this to the result you get by using the first formula.
+
+Filename: \texttt{gaussian\_velocities.py}
+
+
+
+\section*{Exercise 8.5 - Raindrops}
+\addcontentsline{toc}{section}{Exercise 8.5 - Raindrops - \texttt{raindrops.py}}
+
+In this exercise, we will take a look at the \textit{terminal velocity} for raindrops. The terminal velocity is the velocity of a raindrop where the gravity pulls down the raindrop as much as the air resistance acts on it. 
+
+The terminal velocity  $v_T$ (in \si{\meter.\per\second}) for a raindrop with radius $r$ and assumed to be shaped as a perfect sphere is:
+\[
+v_T = \sqrt{\frac{8r\rho_v g}{3\rho C}}
+\]
+where $\rho_v = 1\,\si{g.\per\cubic\centi\meter} = 1000 \,\si{kg.\per\cubic\meter}$ is the approximate density of water, $g = 9.81 \,\si{\meter.\per\square\second}$, $\rho = 1.293 \,\si{\kg.\per\cubic\meter}$ is the approximate density of air and $C = 0.47$ describes how much resistance the raindrop exerts on its environment (in this case the air). 
+
+\subsection*{a)}
+In this subtask you are \textit{not} supposed to use the Numpy-module. 
+
+Make a program which generates $N = 100000$ different raindrops represented by random values for their radii in the interval $[1\,\si{\milli\meter},\ 6\,\si{\milli\meter}) = [10^{-3}\,\si{\meter},\ 6\cdot 10^{-3}\,\si{\meter}) $. 
+
+Your program is supposed to take the time on how long it takes to generate the $N$ raindrops and thereafter find the average terminal velocity. \\
+Your program should then display the average terminal velocity along with how much time it used. 
+
+\subsection*{b)}
+Extend your program from a) such that it does the same calculations, however by using the Numpy-module and vectorization. 
+Write out the terminal velocity along with the runtime of your program which uses vectorization and the Numpy-module. 
+
+In this subtask you will also see that it is a huge improvement in time using vectorization and the Numpy-module compared to the time we got from a). 
+
+\textbf{Hint:} To take the time in seconds of a program, it is possible to use the time-module. An example of finding how long time your program uses to print 'Hello, world!' is as follows:
+\lstinputlisting[style=py]{tatid_pseudokode.py}
+
+Filename: \texttt{raindrops.py}
+
+\end{document}

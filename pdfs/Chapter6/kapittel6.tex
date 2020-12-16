@@ -1,0 +1,173 @@
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+ 
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+ 
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+ 
+ 
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+ 
+ 
+\begin{document}
+\section*{Oppgave 6.1 - Solsystem}
+\addcontentsline{toc}{section}{Oppgave 6.1 - Solsystem - \texttt{solar\_system\_dict.py}}
+Følgende fil inneholder informasjon om gjennomsnittlig avstand fra solen, masse, og radius ved ekvator, til en rekke himmellegemer i vårt solsystem.
+ 
+\lstinputlisting[frame=single]{solar_system_data.dat}
+ 
+\subsection*{a)}
+Skriv et program som leser filen \texttt{solar\_system\_data.dat}, og skriver verdiene inn i tre dictionaries \texttt{distance}, \texttt{mass} og \texttt{radius}. 
+ 
+\subsection*{b)}
+Lag et nytt dictionary, \texttt{density}, som inneholder massetettheten til hver av objektene i $\mathrm{kg/m^3}$. Du kan anta at alle planetene er perfekte sfærer. Volumet til en sfære er $V = \frac{4}{3}\pi r^3$.
+ 
+\subsection*{c) (Valgfri ekstraoppgave)}
+Kombiner informasjonen i et nøstet dictionary, \texttt{solar\_system} slik at f.eks. \texttt{solar\_system[Jupiter][radius]} gir radiusen til Jupiter.
+ 
+Test at det nye dictionary'et du har laget fungerer som det skal ved å regne ut hvor mange jordkloder det tar å rekke fra solen og til Pluto.
+ 
+Filnavn: \texttt{solar\_system\_dict.py}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+\section*{Oppgave 6.2 - Lese og bruke fysiske konstanter}
+\addcontentsline{toc}{section}{Oppgave 6.2 - Lese og bruke fysiske konstanter - \texttt{constants\_hydrogen.py}}
+Det er ofte vi har behov for en god del fysiske konstanter for å modellere ulike fysiske systemer. 
+\subsection*{a)}
+Lag et program som leser \texttt{physics\_constant.dat}. Filen har et slikt format slik at navnene (av vilkårlig lengde) står foran et kolon '\texttt{:}'. Deretter, står konstantens symbol, så verdien og til slutt konstantens enhet.  Programmet skal lagre konstantene i et dictionary. Konstantenes symbol skal brukes som nøkkel for å hente ut konstantens tilhørende verdi. 
+\subsection*{b)}
+Bohr utledet en formel på hvordan en kan modellere energinivåene $E_n$ til et hydrogenatom. Energinivåene er utledet til å være
+\[
+E_n =  -\frac{k_e^2m_ee^4}{2\hbar^2} \frac{1}{n^2}
+\]
+Bruk dictionary-et fra a) for å hente ut de nødvendige konstantene som brukes i modellen, og se om programmet ditt får at 
+\begin{align*}
+ \frac{k_e^2m_ee^4}{2\hbar^2} &\simeq \SI{2.18e-18}{\joule}\\
+ &\simeq \SI{13.6}{\electronvolt} 
+\end{align*}
+der $k_e$ er Coulombs konstant, $m_e$ elektronets masse, $e$ er elementærladningen og $\hbar$ er Plancks reduserte konstant (du finner den i filen som \texttt{hbar}). 
+ 
+Filnavn: \texttt{constants\_hydrogen.py}
+ 
+\section*{Oppgave 6.3 - Dynamisk friksjon}
+\addcontentsline{toc}{section}{Oppgave 6.3 - Dynamisk friksjon - \texttt{dynamic\_friction\_pair.py}}
+Når et legeme beveger seg på et underlag, virker det en dynamisk friksjonskraft på legemet. Friksjonskraften er dynamisk fordi legemet er i bevegelse. 
+ 
+Den dynamiske friksjonskraften $\mu_D$ er
+\[
+\mu_D = N\mu
+\]
+der $\mu$ er friksjonstallet mellom materialene legemet og underlaget består av ($\mu$ vil variere ettersom hvilken materiale-par vi ser på) og $N$ er normalkraften som virker på legemet\footnote{Normalkraften er den kraften som virker på legemet fra underlaget der legemet og underlaget er i kontakt med hverandre.}.
+ 
+Vi antar legemet beveger seg i horisontal retning. Dette gir at 
+\[
+N = mg
+\]
+der $m$ er legemets masse og $g = 9.81\,\si{\meter.\per\square\second}$. 
+ 
+Vi skal se på hva den dynamiske friksjonen blir ettersom hvilket materiale legemet og underlaget er laget av. 
+ 
+\subsection*{a)}
+Lag et program som leser inn filen \texttt{friction\_coefficients\_data.dat} (som du kan finne her: lenke-til-fil) som er en tabell som består av friksjonstall for noen materiale-par. 
+ 
+Den første linjen forteller hvilket material-par vi ser på, og den andre linjen er tilhørende friksjonstall til material-paret. 
+ 
+Programmet skal hente ut og lage separerte lister over material-parene og friksjonstallene. Programmet ditt trenger ikke å ta hensyn til bindestreken mellom materialene (enn så lenge). 
+ 
+\subsection*{b)}
+Nå skal programmet bruke listene av material-parene og friksjonstallene.
+ 
+For hvert materialpar la programmet hente ut materialet til legemet (materialet før bindestreken),materialet til underlaget (etter bindestreken) og tilhørende friksjonstall $\mu$ til paret. La programmet beregne den dynamiske friksjonskraften. Kraften skal så skrives til skjerm der det kommer tydelig fram hvilket materiale legemet og overflaten er laget av. 
+ 
+Her lar vi legemet ha masse $m = 2.5\,\si{\kg}$.
+ 
+Filnavn: \texttt{dynamic\_friction\_pair.py}
+ 
+\section*{Oppgave 6.4 - På Jorden}
+\addcontentsline{toc}{section}{Oppgave 6.4 - På Jorden - \texttt{different\_g.py}}
+Vi har arbeidet mye med tyngdeakselerasjon  $g = 9.81\,\mathrm{m/s^2}$ uten å bekymre oss alt for mye om hvor vi befinner oss på Jorden. Faktisk, så er $g$ avhengig av hvor vi befinner oss (eller; hvor mange meter vi er over havet og ved hvilken breddegrad vi befinner oss)\footnote{Dette er på grunn av sentrifugalkraften - en kraft som vi oppfatter som en tilstedeværende kraft på grunn av Jordens rotasjon}!
+
+I filen  \texttt{data\_different\_g.dat} kan du finne verdier for $g$ (avrundet) for et utvalg byer. 
+\section*{a)}
+Skriv et program som leser filen \texttt{data\_different\_g.dat} og lager et dictionary der verdien av $g$ er lagret for hver by. 
+
+For eksempel, er tyngdeakselerasjonen i Stockholm lik $g = 9.818$. Ditt dictionary burde være laget slik at hvis du sender \texttt{Stockholm} som nøkkel til det, burde tyngeakselerasjonen $ g = 9.818$ bli returnert. 
+
+Vi skal anta at en city har enten ett mellomrom i sitt navn (for eksempel San Francisco), eller ingen (for eksempel Paris).
+
+Den siste linjen som inneholder kun '\texttt{-}'s markerer slutten på listen over byene. 
+
+\textbf{Hint: } Bruk \texttt{split()} for hver linje for å få en liste av strings som opprinnelig var separert av mellomrom. Dersom et navn inneholder ett mellomrom, så vil listen bli 1 enhet lengre enn listen med navn uten mellomrom. En kan derfor sjekke lengden til listen for å se om bynavnet har et mellomrom eller ei.  
+
+Slicing vil også være veldig nyttig for å hente ut verdier for $g$. 
+\section*{b)}
+Utvid programmet ditt fra a) slik at den leser filen \texttt{on\_Earth.dat}. 
+Filen inneholder flere linjer, hvorav hver av linjene består av to byer seperert med \texttt{to}. 
+
+For hver by i \texttt{on\_Earth.dat}, må programmet ditt hente ut navnet av hver by og bruke dictionary-et fra a) for å skrive ut tyngdeakselerasjonen til byene sepearert med \texttt{to} (i samme format som i \texttt{on\_Earth.dat}, bare med tilhørende verdier av $g$ for hver by). 
+
+Dette viser hvordan utskriften skal se ut:
+\begin{verbatim}
+9.813 to 9.8
+9.805 to 9.816
+9.82 to 9.78
+\end{verbatim}
+
+Den siste linjen i filen markerer slutten. Du kan anta at ingen bynavn begynner på '\texttt{On}'. 
+
+\textbf{Hint: } Igjen er \texttt{split()} din venn. Utnytt antakelsen at bynavnene består enten av ett mellomrom eller ingen, ingen by har bynavn som begynner på '\texttt{On}' og det er alltid en \texttt{to} som separerer byene. 
+
+For den andre byen (etter '\texttt{to}'), kan en bruke  \texttt{' '.join(line[start:])} for å hente ut dets hele navn. Indeksen \texttt{start} er avhengig om hvorvidt den første byen har et navn med eller uten ett mellomrom. 
+
+Filename: \texttt{different\_g.py}
+ 
+\end{document}
+ 
+ 
+

@@ -1,0 +1,74 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage[margin=1.5cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+\begin{document}
+
+\section*{Oppgave 9.1}
+Ideelt skal \texttt{ConstantAcceleration} brukes så mye som mulig. Dette betyr at den lagrer alle mulig verdier, og kalles på både i utregningen av posisjon og hastighet.
+\lstinputlisting[style=py]{Jerk.py}
+
+
+\newpage
+\section*{Oppgave 9.2}
+Det er viktig at de kaller på superklassen sin funksjon for å regne ut massetettheten. 
+\lstinputlisting[style=py]{Solid.py}
+
+
+\newpage
+\section*{Oppgave 9.3}
+Poenget her er at de skal bruke \texttt{Cylinder} sin \texttt{inertia} for å beregne treghetsmomentet til sylinderskallet. 
+\lstinputlisting[style=py]{Moment_of_inertia.py}
+\begin{verbatim}
+>>> Cylinder has moment of inertia I = 1.40625
+>>> Cylindrical shell has moment of inertia I = 2.8125
+\end{verbatim}
+\end{document}
+
+

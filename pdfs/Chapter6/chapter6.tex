@@ -1,0 +1,184 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{siunitx}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\labelformat{equation}{equation~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\planck}{$h = \SI{6.626e-34}{J.s}$}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+\begin{document}
+
+\section*{Exercise 6.1 - Solar system}
+\addcontentsline{toc}{section}{Exercise 6.1 - Solar system - \texttt{solar\_system\_dict.py}}
+
+The following file \todo{file reference} contains information about average distance from the sun, the mass, and the radius of a selection of celestial bodies in our solar system.
+
+\lstinputlisting[style=py]{solar_system_data.dat}
+
+\subsection*{a)}
+Read the file, and write it's content into three dictionaries, \texttt{distance}, \texttt{mass} and \texttt{radius}, with the name of the celestial objects as keys.
+
+\subsection*{b)}
+Make a new dictionary, \texttt{densities}, which contains the density of each celestial object. Density is mass divided by volume, in $\mathrm{kg/m^3}$ (note that the radius in the file is not in meters). You may assume that all the objects are perfect spheres, meaning that their volumes are given as $V = 4/3\pi r^3$.
+
+\subsection*{c)}
+Write the information, including the densities, to a new file, with more or less same layout as the original (your code from exercise a) should be able to read it).
+
+\subsection*{d) (Voluntary exercise)}
+
+Combine the information into a nested dictionary, \texttt{solar\_system}, such that for instance\\
+\texttt{solar\_system[Jupiter][radius]} would yield the radius of Jupiter.
+
+Test your new dictionary by calculating how many earths you would have to align to reach from the Sun to Pluto.
+
+Filename: \texttt{solar\_system\_dict.py}
+
+
+
+
+\section*{Exercise 6.2 - Read and use physical constants}
+\addcontentsline{toc}{section}{Exercise 6.2 - Read and use physical constants - \texttt{constants\_hydrogen.py}}
+
+It is quite often we have use for a selection of physical constant to model different systems in physics. However, it might get challenging after a while to memorize all the values by heart. 
+
+Instead of going the old way by memorizing the values, we can now create a file containing the physical values and then write a program which extracts the values to use in a specified problem. 
+
+\subsection*{a)}
+Write a program which reads \texttt{physics\_constant.dat}. \\
+The file has a format where the names of the constant of arbitrary number of characters is written before a colon, '\texttt{:}'. The constant's symbol is to be found after the colon, after the symbol is the value of the constant and at the end of each line is the unit of the constant. 
+
+The program must store the constants in a dictionary. The symbol of the constant have to be the key to get the corresponding value of the constant. 
+
+\subsection*{b)}
+Bohr found a model on how one could model the energy levels $E_n$ to a hydrogen atom. The levels are found to be:
+\[
+E_n =  -\frac{k_e^2m_ee^4}{2\hbar^2} \frac{1}{n^2}
+\]
+Use your dictionary from a) to get the necessary constant which is used in the model and test if your program gives that:
+\begin{align*}
+\frac{k_e^2m_ee^4}{2\hbar^2} &\simeq \SI{2.18e-18}{\joule}\\
+&\simeq \SI{13.6}{\electronvolt} 
+\end{align*}
+where $k_e$ is Coulomb's constant, $m_e$ the mass of an electron, $e$ the elementary charge and $\hbar$ is Planck's reduced constant (you can find it in the file as \texttt{hbar}).
+
+Filename: \texttt{constants\_hydrogen.py}
+
+
+
+\section*{Exercise 6.3 - Dynamical frictions}
+\addcontentsline{toc}{section}{Exercise 6.3 - Dynamical frictions - \texttt{dynamic\_friction\_pair.py}}
+A dynamical friction force from a surface on which moving objects moves across \footnote{The contact points between the objects and the surface must be in movement - hence the force is dynamic.}.  
+
+The dynamical friction force $\mu_D$  is
+\[
+\mu_D = N\mu
+\]
+where $\mu$ is the friction coefficient between the material of the surface and the material of the object and $N$ is the normal force which acts on the object \footnote{The normal force is the force which acts on the object from the surface where the object and the surface is in contact with each other.}.
+
+We assume that the object moves in horizontal direction. Through this assumption, one can find that the normal force $N$ is:
+\[
+N = mg
+\]
+where $m$ is the mass of the object and $g = 9.81\,\si{\meter.\per\square\second}$. 
+
+\subsection*{a)}
+Write a program which reads the file \texttt{friction\_coefficients\_data.dat} (which can be found here: link-to-file) which is a table consisting of friction coefficients for selected pairs of materials. 
+
+The first line tells us which pair of materials we are looking at, and the second line consists of corresponding coefficients of friction .
+
+The program must store the pairs of materials and the values of their coefficient of friction in seperate lists. You do not need to worry about (yet) the hyphen ('\texttt{-}') between the materials. 
+\subsection*{b)}
+Now your program has two lists; one for the pairs of materials and one for the values of the coefficients of friction. 
+
+For every pair of material, let the program extract the material to the object (material given before the hyphen), material to the surface (after the hyphen) and corresponding coefficient of friction $\mu$. 
+
+Let the program calculate the dynamical friction force. The force must then be displayed such that it is clearly stated which material the object and the surface is made of. 
+
+Let the object have mass $m = 2.5\,\si{\kg}$.
+
+Filename: \texttt{dynamic\_friction\_pair.py}
+
+
+
+\section*{Exercise 6.4 - On Earth}
+\addcontentsline{toc}{section}{Exercise 6.4 - On Earth - \texttt{different\_g.py}}
+We have been working a lot with the gravitational acceleration $g = 9.81\,\mathrm{m/s^2}$ without worrying about where on Earth we are located. In fact, the value of $g$ is dependent on where we are located (more precisely: on which altitude and latitude we are located)\footnote{This is due to the centrifugal force - a force which is due to the rotational motion of the Earth.}!
+
+In the file \texttt{data\_different\_g.dat} can you find (rounded) calculated values for $g$ for a selection of cities.
+\subsection*{a)}
+Write a program which reads the file \texttt{data\_different\_g.dat} and creates a dictionary where $g$ for every city is stored. 
+
+For instance, the acceleration of gravity in Stockholm if $g = \SI{9.818}{m/s^2}$. Your dictionary should be made such that if you send \texttt{Stockholm} as a key to the dictionary it should return $9.818$, the gravitational acceleration in Stockholm. 
+
+We will assume that a city will either have one space in its name (for instance San Francisco), or no space (for instance Paris). 
+
+The last line containing only '\texttt{-}'s marks the end of the given cities. 
+
+\textbf{Hint: } Use \texttt{split()} for every line to get a list of strings which were originally separated by spaces. If a name contains one space the list will be of 1 unit longer than the list with name without space. One could therefore check the length of the lists to see if the name of the city has a space or not. 
+
+Slicing will also be useful when extracting the values of $g$.
+\subsection*{b)}
+Extend your program from a) such that it reads the file \texttt{on\_Earth.dat}. 
+The file contains several lines, each consisting of two cities seperated by \texttt{to}. 
+
+For every city in \texttt{on\_Earth.dat}, your program must extract the name of the two cities and use the dictionary from a) to print the acceleration of gravitation of both cities seperated by a \texttt{to}
+(in the same manner as in the file \texttt{on\_Earth.dat}, just with the corresponding values of $g$ instead of the name of the cities).
+
+This example shows how the format should be: 
+\begin{verbatim}
+9.813 to 9.8
+9.805 to 9.816
+9.82 to 9.78
+\end{verbatim}
+
+The last line in the file however, marks the end of the file. You can assume that no city begins with '\texttt{On}'. 
+
+\textbf{Hint: } Again, \texttt{split()} is your friend. Exploit the assumption that the cities has names containing either one or no space, no city begins with '\texttt{On}' and there is always a \texttt{to} which separates the two cities. 
+
+For the second city  (after '\texttt{to}'), one could use \texttt{' '.join(line[start:])} to get the whole name. The index \texttt{start} is dependent on the first city having a name with or without a space. 
+
+Filename: \texttt{different\_g.py}
+\end{document}

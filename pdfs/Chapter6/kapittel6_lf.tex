@@ -1,0 +1,102 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc,url}
+\usepackage[hang,small,bf]{caption}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{varioref}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage[margin=1.5cm]{geometry}
+\labelformat{equation}{ligning~(#1)}
+
+\renewcommand{\exp}{\mathrm{e}^}
+\newcommand{\halflife}{t_{\frac{1}{2}}}
+
+\definecolor{light_green}{rgb}{0, 0.6, 0}
+\definecolor{light_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{magenta}{rgb}{0.7, 0, 0.5}
+
+
+\lstdefinestyle{py}{
+    language = python,
+    frame = single,
+    showstringspaces = false,
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    commentstyle = \color{light_grey},
+    keywordstyle = \color{magenta},
+    stringstyle = \color{light_green},
+}
+
+
+\begin{document}
+
+\section*{Oppgave 6.1}
+Filen må vellykket være lest, og all informasjonen må være samlet i tre dictionaries med planet-navnene som keys. Om noen mot formodning skulle klare å regne massetetthet feil så er ikke det så viktig.
+
+Til oppgave c) er det selvsagt foretrukket om det brukes printf formatering til å få all dataen i rette kolonner, men det er godkjent så lenge det er minst et space mellom dataen på hver linje (ettersom det da er lesbart av et program).
+
+\lstinputlisting[style=py]{solar_system_dict.py}
+
+\begin{verbatim}
+>>> Number of earths from Sun to Pluto = 925054.88
+\end{verbatim}
+\newpage	
+\section*{Oppgave 6.2}
+\subsection*{a)}
+Viktig at symbolene til konstantene hentes ut og brukes som nøkkel til tilhørende verdier. For å hente ut nødvendig informasjon, er ganske \texttt{split()} greiest å bruke. Siden navnene på konstantene er av vilkårlig lengde, må programmet hente ut verdier bakfra i listen etter \texttt{split()} har blitt kalt.
+\subsection*{b)}
+Poenget er nå at de skal bruke dictionary-et til å hente ut de nødvendige verdiene for å utføre beregningen beskrevet i oppgaven. Fint om de er påpasselige på hvilken enhet verdien de skriver ut er i.  
+\lstinputlisting[style=py]{constants_hydrogen.py}
+Resultat:
+\begin{verbatim}
+>>> In V: 2.17987e-18
+    In eV: 13.6057
+\end{verbatim}
+\newpage
+\section*{Oppgave 6.3}
+Her er det viktig at de behersker \texttt{split()} for å få de nødvendige verdiene i lister. Det er også nyttig i oppgaven å dele stringsene etter et gitt argument til \texttt{split} istedenfor mellomrom.
+\lstinputlisting[style=py]{dynamic_friction_pair.py}
+Resultat:
+\begin{verbatim}
+Material of object | Material of surface | Dynamic friction
+steel                 steel                14.715 
+steel                 ice                   1.22625 
+ice                   ice                   0.73575 
+ice                  rubber                 0.4905 
+wood                  wood                  7.3575 
+nickel                glass                19.1295 
+wood                  stone                 6.13125 
+steel                 plexiglass           11.0363 
+diamond               metal                 2.4525 
+\end{verbatim}
+\newpage
+\section*{Oppgave 6.4\footnote{Referanse til Samael - On Earth}}
+\subsection*{a)}
+Viktig å hente ut riktig bynavn, og passe på at programmet tar hensyn til navn med eller uten mellomrom. 
+\subsection*{b)}
+Her er det viktig å hente ut riktig bynavn, og hente ut $g$ for hver tilhørende by med dictionaryet fra a). Utfordringen blir nok å vite hvordan testene skal foregå. 
+\lstinputlisting[style=py]{different_g.py}
+
+\end{document}
+
+
